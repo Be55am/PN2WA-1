@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane hgap="8.0" prefHeight="480.0" prefWidth="640.0" vgap="8.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.AnchoreController">
+<columnConstraints>
+    <ColumnConstraints />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" prefWidth="120.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="490.0" minWidth="471.0" prefWidth="489.0" />
+</columnConstraints>
+<rowConstraints>
+      <RowConstraints />
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+</rowConstraints>
+<children>
+    <VBox maxHeight="1.7976931348623157E308" maxWidth="-Infinity" spacing="15.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+        <children>
+            <TitledPane maxWidth="1.7976931348623157E308" text="Drawing Shapes">
+                <content>
+                    <VBox spacing="10.0">
+                        <children>
+                            <RadioButton fx:id="placeRadio" mnemonicParsing="false" text="Place">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="ChapeToggleGroup" />
+                           </toggleGroup>
+                           <font>
+                              <Font size="14.0" />
+                           </font></RadioButton>
+                            <RadioButton fx:id="transitionRadio" mnemonicParsing="false" text="Transition" toggleGroup="$ChapeToggleGroup">
+                           <font>
+                              <Font size="14.0" />
+                           </font></RadioButton>
+                            <RadioButton fx:id="arrowRadio" mnemonicParsing="false" text="Arrow" toggleGroup="$ChapeToggleGroup">
+                           <font>
+                              <Font size="14.0" />
+                           </font></RadioButton>
+                        </children>
+                    </VBox>
+                </content>
+            </TitledPane>
+            <Button fx:id="undoBtn" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Undo" textFill="#005599">
+                <VBox.margin>
+                    <Insets />
+                </VBox.margin>
+               <graphic>
+                  <ImageView fitHeight="18.0" fitWidth="29.0">
+                     <image>
+                        <Image url="@../images/undo.png" />
+                     </image>
+                     <viewport>
+                        <Rectangle2D />
+                     </viewport>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="clearBtn" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#HandleClearArea" style="-fx-background-image: url(&quot;/recycle.png&quot;);" text="Clear" textFill="#e50000" textOverrun="CLIP">
+               <graphic>
+                  <ImageView fitHeight="19.0" fitWidth="19.0">
+                     <image>
+                        <Image url="@../images/recycle.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+        </children>
+    </VBox>
+    <AnchorPane fx:id="drawingAreaAnchorPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#DrawChapes" style="-fx-background-color: white;" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+      <VBox maxWidth="1.7976931348623157E308" spacing="8.0" style="-fx-background-color: red;" GridPane.columnIndex="1" GridPane.columnSpan="2">
+         <children>
+            <HBox maxWidth="1.7976931348623157E308" spacing="8.0" style="-fx-background-color: red;">
+               <children>
+                  <MenuBar>
+                    <menus>
+                      <Menu mnemonicParsing="false" text="File">
+                        <items>
+                          <MenuItem mnemonicParsing="false" text="Close" />
+                        </items>
+                      </Menu>
+                      <Menu mnemonicParsing="false" text="Edit">
+                        <items>
+                          <MenuItem mnemonicParsing="false" text="Delete" />
+                        </items>
+                      </Menu>
+                      <Menu mnemonicParsing="false" text="Help">
+                        <items>
+                          <MenuItem mnemonicParsing="false" text="About" />
+                        </items>
+                      </Menu>
+                        <Menu mnemonicParsing="false" text="File">
+                           <items>
+                              <MenuItem mnemonicParsing="false" text="Close" />
+                           </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Edit">
+                           <items>
+                              <MenuItem mnemonicParsing="false" text="Delete" />
+                           </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Help">
+                           <items>
+                              <MenuItem mnemonicParsing="false" text="About" />
+                           </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="File">
+                           <items>
+                              <MenuItem mnemonicParsing="false" text="Close" />
+                           </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="File">
+                           <items>
+                              <MenuItem mnemonicParsing="false" text="Close" />
+                           </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="File">
+                           <items>
+                              <MenuItem mnemonicParsing="false" text="Close" />
+                           </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="File">
+                           <items>
+                              <MenuItem mnemonicParsing="false" text="Close" />
+                           </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="File">
+                           <items>
+                              <MenuItem mnemonicParsing="false" text="Close" />
+                           </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="File">
+                           <items>
+                              <MenuItem mnemonicParsing="false" text="Close" />
+                           </items>
+                        </Menu>
+                    </menus>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <effect>
+                        <MotionBlur radius="0.75">
+                           <input>
+                              <DropShadow />
+                           </input>
+                        </MotionBlur>
+                     </effect>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </MenuBar>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+</children>
+<padding>
+    <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+</padding>
+</GridPane>

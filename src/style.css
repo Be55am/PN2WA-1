@@ -1,0 +1,120 @@
+#undoBtn {
+
+}
+.arrowspace {
+
+}
+/*.curve{*/
+    /*margin:0 auto;*/
+    /*position:relative;*/
+    /*width:100px;*/
+    /*height:100px;*/
+    /*border-top:1px solid red;*/
+    /*border-left:1px solid red;*/
+    /*border-top-left-radius:200px;*/
+    /*float:left;*/
+    /*margin-left:100px;*/
+    /*box-shadow:inset 0 1px 0 black;*/
+/*}*/
+
+/*.curve:after{*/
+    /*content:"";*/
+    /*position:absolute;*/
+    /*width:196px;*/
+    /*height:196px;*/
+    /*border-top:1px solid red;*/
+    /*border-left:1px solid red;*/
+    /*border-top-left-radius:196px;*/
+    /*left:4px;*/
+    /*top:4px;*/
+    /*box-shadow:0 1px 0 black;*/
+/*}*/
+
+.arrowspace{
+    /*-fx-border-color: #000;*/
+    /*-fx-border-style: solid;*/
+    /*-fx-border-width: 5px;*/
+    /*-fx-border-color:#005599;*/
+    /*-fx-border-radius: 50%/100px 100px 0 0;*/
+    -fx-background-color: red;
+}
+.placeview {
+    -fx-background-color: #005599;
+    -fx-border-width: 2px;
+    -fx-background-color: green;
+}
+AnchorPane {
+    -fx-background-color: #005599;
+}
+P1 {
+    -fx-background-color: #005599;
+
+}
+
+/*.fieldlist input[type="radio"] {*/
+    /*-fx-float: right;*/
+    /*-webkit-appearance: none;*/
+    /*-fx-border: none;*/
+    /*-fx-width: 25px;*/
+    /*-fx-height: 25px;*/
+    /*-fx-background: url("images/radio.png") left center no-repeat;*/
+    /*background-size: 20px;*/
+/*}*/
+/*.fieldlist input[type="radio"]:checked {*/
+    /*background: url(images/radio_checked.png) left center no-repeat;*/
+
+/*}*/
+
+#transitionRadio:focused {
+    -fx-focus-color: rgba(236, 12, 0, 0.49);
+}
+#placeRadio:focused {
+    -fx-focus-color: rgba(0, 236, 25, 0.46);
+}
+#arrowRadio:focused {
+    -fx-focus-color: rgba(37, 92, 255, 0.42);
+}
+
+#arrowRadio , #placeRadio , #transitionRadio {
+    -fx-focus-color: transparent;
+}
+
+
+#transitionRadio .dot , #arrowRadio .dot , #placeRadio .dot{
+    -fx-focus-color: transparent;
+    -fx-padding: 10px;
+    -fx-background-color:transparent;
+    -fx-background-insets: -10, -10;
+    -fx-background-image: url("/images/transition.png")  ;
+    -fx-background-position: left top, center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover, auto;
+}
+#arrowRadio .dot{
+    -fx-background-image: url("/images/Arrow-ms.png")  ;
+}
+#placeRadio .dot {
+    -fx-background-image: url("/images/place-sm.png")  ;
+}
+#transitionRadio:selected .dot,
+#arrowRadio:selected .dot,
+#placeRadio:selected .dot {
+    /*-fx-background-radius: 15px;*/
+
+    -fx-padding: 10px;
+    -fx-focus-color: transparent;
+    /*-fx-background-color: #f48893;*/
+    -fx-background-insets: -10, -10;
+    -fx-background-image: url("/images/transition-selected.png")  ;
+    -fx-background-position: left top, center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover, auto;
+}
+ #arrowRadio:selected .dot{
+     -fx-background-image: url("/images/arrow-selected.png")  ;
+ }
+#placeRadio:selected .dot {
+    -fx-background-image: url("/images/place-selected.png")  ;
+}
+
+
