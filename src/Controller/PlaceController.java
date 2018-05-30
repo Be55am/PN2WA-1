@@ -14,12 +14,12 @@ public class PlaceController {
     public PlaceController(Place place) {
         this.place = place;
         this.view = place.getView();
-//
+//      here you can adjust the place of the dragg with the scene
         view.setOnMouseDragged(event -> {
-            view.relocate(event.getSceneX() - 20, event.getSceneY() - 90);
+            view.relocate(event.getSceneX() - 190, event.getSceneY() - 90);
 
             Position p = place.getPosition();
-            p.setPositionX(event.getSceneX() - 20);
+            p.setPositionX(event.getSceneX() - 190);
             p.setPositionY(event.getSceneY() - 90);
             place.setPosition(p);
         });
