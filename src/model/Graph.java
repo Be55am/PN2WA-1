@@ -4,12 +4,13 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import java.util.ArrayList;
 
-public class Graph {
+public  class Graph {
 
-    public static ArrayList<Arrow> arrows=new ArrayList<Arrow>();
-    public static ArrayList<Place> places=new ArrayList<Place>();
-    public static ArrayList<Transition>transitions=new ArrayList<Transition>();
+    public static  ArrayList<Arrow> arrows=new ArrayList<>();
+    public static  ArrayList<Place> places=new ArrayList<>();
+    public static  ArrayList<Transition>transitions=new ArrayList<>();
     private  AnchorPane Anchorpane;
+    private  String name;
 
     public void addPlace(Place place){
         places.add(place);
@@ -73,16 +74,16 @@ public class Graph {
         return places;
     }
 
-    public static void setPlaces(ArrayList<Place> places) {
-        Graph.places = places;
+    public  void setPlaces(ArrayList<Place> places) {
+        this.places = places;
     }
 
-    public static void setTransitions(ArrayList<Transition> transitions) {
-        Graph.transitions = transitions;
+    public  void setTransitions(ArrayList<Transition> transitions) {
+        this.transitions = transitions;
     }
 
-    public static ArrayList<Transition> getTransitions() {
-        return transitions;
+    public  ArrayList<Transition> getTransitions() {
+        return this.transitions;
     }
 
     public void deleteArrow(Arrow arrow){

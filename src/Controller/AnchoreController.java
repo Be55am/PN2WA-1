@@ -20,6 +20,7 @@ import model.Graph;
 import model.Place;
 import model.Transition;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -188,7 +189,8 @@ public class AnchoreController  {
         //        T1 =new Transition(new Position(ev.getX(),ev.getY()),"T"+count);
         drawingAreaAnchorPane.getChildren().clear();
         System.out.println("X Y -->"+ ev.getX()+"--"+ ev.getY());
-        Place p =new  Place(new Position(ev.getX(), ev.getY()), "P" + countPlace);
+        //todo read the weight of the place
+        Place p =new  Place(new Position(ev.getX(), ev.getY()), "P" + countPlace,1);
 
         //   p.setO
         p.getView().setId("P" + countPlace);
@@ -205,7 +207,8 @@ public class AnchoreController  {
         countTransition++;
         //        T1 =new Transition(new Position(ev.getX(),ev.getY()),"T"+count);
         drawingAreaAnchorPane.getChildren().clear();
-        Transition transition =new Transition(new Position(ev.getX(), ev.getY()), "T" + countTransition);
+        //todo enter the weight of the transition here
+        Transition transition =new Transition(new Position(ev.getX(), ev.getY()), "T" + countTransition,0);
         transition.getTrasitionView().setId("T"+countTransition);
         //    transition.getTrasitionView().getStyleClass().add("arrowspace");
 //
@@ -247,7 +250,7 @@ public class AnchoreController  {
     }
 
     private Place getPlace(Position position){
-        for (Place p : Graph.places){
+        for (Place p : graph.places){
             if (    position.getPositionX() == p.getView().getPosition().getPositionX()
                     &&
                     position.getPositionY() == p.getView().getPosition().getPositionY()
@@ -258,7 +261,7 @@ public class AnchoreController  {
         return  null;
     }
     public Transition getTransition(Position position){
-        for (Transition t : Graph.transitions){
+        for (Transition t : graph.transitions){
             if (    position.getPositionX() == t.getTrasitionView().getPosition().getPositionX()
                     &&
                     position.getPositionY() == t.getTrasitionView().getPosition().getPositionY()
@@ -267,6 +270,46 @@ public class AnchoreController  {
             }
         }
         return  null;
+    }
+
+    @FXML
+    public int convert(){
+        System.out.print("saving Petri net ...");
+        File file=new File("test.txt");
+        System.out.println(file.getAbsolutePath());
+
+        DataOutputStream dos=null;
+        try{
+            dos=new DataOutputStream(new BufferedOutputStream(new FileOutputStream(file)));
+            dos.writeUTF("Test");
+
+            for (Transition t:graph.getTransitions()) {
+                dos.writeUTF(t.getName());
+            }
+            dos.writeUTF("\n");
+            for (Place p:graph.getPlaces()) {
+                dos.writeUTF(p.getName());
+            }
+
+            dos.flush();
+            dos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            try{
+                if(dos!=null)
+                    dos.close();
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+        }
+
+
+
+
+
+
+        return 0;
     }
 
 

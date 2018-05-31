@@ -17,6 +17,7 @@ public class PlaceView extends Group implements ShapeView{
     private Label label;
     private Text text;
     private Position position;
+    public AnchorPane anchorPane;
 
     public PlaceView(Position position,String name){
         this.position = position;
@@ -37,8 +38,9 @@ public class PlaceView extends Group implements ShapeView{
         getChildren().addAll(circle,text);
     }
     @Override
-    public void drow(AnchorPane Anchorpane) {
-        Anchorpane.getChildren().add(this);
+    public void drow(AnchorPane anchorpane) {
+        anchorpane.getChildren().add(this);
+        this.anchorPane=anchorpane;
     }
 
     public Circle getCircle() {
@@ -57,8 +59,8 @@ public class PlaceView extends Group implements ShapeView{
         this.circle = circle;
     }
 
-    public void setText(Text text) {
-        this.text = text;
+    public void setText(String text) {
+        this.text = new Text(position.getPositionX()-15,position.getPositionY()+30,text);
     }
 
     public void setLabel(Label label) {
@@ -72,4 +74,6 @@ public class PlaceView extends Group implements ShapeView{
     public void setPosition(Position position) {
         this.position = position;
     }
+
+
 }

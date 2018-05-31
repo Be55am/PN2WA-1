@@ -13,8 +13,8 @@ public class Transition extends Shape {
      * @param position
      * @param name
      */
-    public Transition(Position position,String name) {
-        super(position);
+    public Transition(Position position,String name,int weight) {
+        super(position,name,weight);
         trasitionView=new TransitionView(position,name);
 
         TransitionController controller=new TransitionController(this);

@@ -13,19 +13,19 @@ public class TransitionController {
         this.view=transition.getTrasitionView();
 
         view.setOnMouseDragged(event ->{
-            view.relocate(event.getSceneX()-160,event.getSceneY()-90);
+            view.relocate(event.getSceneX()-190,event.getSceneY()-50);
 
             Position p=transition.getPosition();
-            p.setPositionX(event.getSceneX()-160);
-            p.setPositionY(event.getSceneY()-90);
+            p.setPositionX(event.getSceneX()-190);
+            p.setPositionY(event.getSceneY()-50);
             transition.setPosition(p);
 
         } );
 
         view.setOnMouseReleased(event -> {
             Position p=transition.getPosition();
-            p.setPositionX(event.getSceneX()-160);
-            p.setPositionY(event.getSceneY()-90);
+            p.setPositionX(event.getSceneX()-190);
+            p.setPositionY(event.getSceneY()-50);
             transition.setPosition(p);
             view.relocate(p.getPositionX(),p.getPositionY());
         });
