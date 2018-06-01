@@ -47,7 +47,7 @@ public class Arrow {
         if(startingShape instanceof Place)
             arrowView=new ArrowView(start.getPositionX()+30,start.getPositionY()+30,end.getPositionX()+20,end.getPositionY()+0);
         else
-            arrowView=new ArrowView(start.getPositionX()+20,start.getPositionY()+10,end.getPositionX()+30,end.getPositionY()+30);
+            arrowView=new ArrowView(start.getPositionX()+15,start.getPositionY()+10,end.getPositionX()+30,end.getPositionY()+30);
 
         Anchorpane.getChildren().add(arrowView);
     }

@@ -3,19 +3,21 @@ package Controller;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
 import model.Arrow;
 import model.Graph;
 import model.Place;
 import  Views.PlaceView;
 import  Views.Position;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 
 public class PlaceController {
     private Place place;
     private PlaceView view;
-    private AnchorPane anchorPane;
+   // private AnchorPane anchorPane;
 
     public PlaceController(Place place) {
         this.place = place;
@@ -40,71 +42,57 @@ public class PlaceController {
                 contextMenu.show(view,event.getScreenX(),event.getScreenY());
                 reName.setOnAction(event1 -> reName());
                 delete.setOnAction(event1 -> delete());
+                setMarking.setOnAction(event1 -> setMarking());
             }
 
 
 
         });
 
-
-
-
-//        view.setOnMousePressed(event -> {
-//            Position p = place.getPosition();
-//            p.setPositionX(event.getSceneX() - 20);
-//            p.setPositionY(event.getSceneY() - 90);
-//            place.setPosition(p);
-//
-//            view.relocate(p.getPositionX(), p.getPositionY());
-//        });
-
-//        view.setOnMousePressed(event -> {
-////             if (){
-////
-////             }
-//               PlaceView p = (PlaceView) event.getSource();
-//
-//  p.getChildren().clear();
-             // Place placep =null;
-//            for (Place place1: Graph.places) {
-//
-////              if (place1.getView().getPosition().getPositionX() == p.getPosition().getPositionX() &&
-////                      place1.getView().getPosition().getPositionY() == p.getPosition().getPositionY()
-////                      ){
-////                  this.place= place1;
-////              }
-////            }
-//
-//            Arrow arrow2= new Arrow(this.place,this.place);
-//            Graph graph=new Graph();
-//
-//            graph.addArrow(arrow2);
-//            AnchoreController.staticAnchorPane.getChildren().clear();
-//            graph.paint(AnchoreController.staticAnchorPane);
-//
-//            System.out.print(p.getPosition().getPositionX()+"-Y "+p.getPosition().getPositionY()+
-//                    " -THis is place do you want"+p.getLabel()+p.getProperties().toString()+"------"+p.getId());
-//        });
-//    }
-//
-//    public enum ClickFS{
-//        FIRST,SECONDE
    }
 
-   //todo this doesn't work
+   //todo this doesn't work there is a probleme when you change the name it doesn't connect with the arcs
     public void reName(){
         TextInputDialog dialog=new TextInputDialog();
         dialog.setTitle("Rename");
         dialog.setHeaderText("Renaming : "+place.getName());
         dialog.setContentText("Enter new Name : ");
         Optional<String> result= dialog.showAndWait();
-        result.ifPresent(name ->place.setName(name) );
-        this.anchorPane=view.anchorPane;
-        view.setText(place.getName());
-        view.anchorPane.getChildren().remove(view);
-        //this.view=new PlaceView(place.getPosition(),place.getName());
-        anchorPane.getChildren().add(view);
 
+        //AnchoreController.graph.getPlaces().remove(place);
+        result.ifPresent(name -> place.setName(name));
+        place.refrech();
+        //AnchoreController.graph.addPlace(place);
+        //place.getView().setText(new Text(place.getName()));
+
+        AnchoreController.staticAnchorPane.getChildren().clear();
+        AnchoreController.graph.paint(AnchoreController.staticAnchorPane);
+
+
+
+
+
+
+
+    }
+    public void setMarking(){
+        TextInputDialog dialog=new TextInputDialog();
+        dialog.setTitle("Setting marking ");
+        dialog.setContentText("enter your marking : ");
+        //todo there is an exception should be captured , the case of the marking is not a number
+        Optional<String> result=dialog.showAndWait();
+
+        if(result.isPresent()){
+           int marking=Integer.valueOf(result.get());
+           //AnchoreController.graph.deleteShape(place);
+             place.setValue(marking);
+             place.refrech();
+           // AnchoreController.graph.addPlace(place);
+            //place.getView().setText(new Text(place.getName()));
+
+            AnchoreController.staticAnchorPane.getChildren().clear();
+            AnchoreController.graph.paint(AnchoreController.staticAnchorPane);
+        }
     }
     public void delete(){
         Alert alert=new Alert(Alert.AlertType.CONFIRMATION);
@@ -116,6 +104,23 @@ public class PlaceController {
             //the user chose o  k
             view.anchorPane.getChildren().remove(view);
             Graph.places.remove(place);
+
+            ArrayList<Arrow> deletedArrows=new ArrayList<>();
+
+
+            for (Arrow a:Graph.arrows) {
+                if(a.getStartingShape()==place||a.getEndingShape()==place){
+                    System.out.println("arrwo deleted");
+                    AnchoreController.staticAnchorPane.getChildren().remove(a.getArrowView());
+                   deletedArrows.add(a);
+
+                }
+            }
+            for (Arrow a:deletedArrows) {
+                AnchoreController.graph.deleteArrow(a);
+            }
+            AnchoreController.staticAnchorPane.getChildren().clear();
+            AnchoreController.graph.paint(AnchoreController.staticAnchorPane);
 
         }
 

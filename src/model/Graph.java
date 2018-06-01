@@ -32,16 +32,18 @@ public  class Graph {
     public void paint(AnchorPane Anchorpane){
         this.Anchorpane=Anchorpane;
 
-        for (Arrow arrow:arrows) {
 
-            arrow.paint(Anchorpane);
-
-        }
         for (Place place:places){
             place.paint(Anchorpane);
         }
         for(Transition transition:transitions){
             transition.paint(Anchorpane);
+        }
+
+        for (Arrow arrow:arrows) {
+
+            arrow.paint(Anchorpane);
+
         }
     }
 
@@ -67,7 +69,7 @@ public  class Graph {
     }
 
     public void setArrows(ArrayList<Arrow> arrows) {
-        this.arrows = arrows;
+        Graph.arrows = arrows;
     }
 
     public ArrayList<Place> getPlaces() {
@@ -75,15 +77,15 @@ public  class Graph {
     }
 
     public  void setPlaces(ArrayList<Place> places) {
-        this.places = places;
+        Graph.places = places;
     }
 
     public  void setTransitions(ArrayList<Transition> transitions) {
-        this.transitions = transitions;
+        Graph.transitions = transitions;
     }
 
     public  ArrayList<Transition> getTransitions() {
-        return this.transitions;
+        return transitions;
     }
 
     public void deleteArrow(Arrow arrow){

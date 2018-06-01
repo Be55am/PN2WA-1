@@ -34,7 +34,7 @@ public class AnchoreController  {
     public static  AnchorPane staticAnchorPane;
     private Transition T1;
     private int countTransition, countPlace , countArrow;
-    private Graph graph;
+    public static Graph graph;
 
     public void initialize(){
         transitionRadio.setUserData(TypeChape.TRANSITION);
@@ -162,17 +162,7 @@ public class AnchoreController  {
                 graph.addArrow(arrow);
                 drawingAreaAnchorPane.getChildren().clear();
                 graph.paint(drawingAreaAnchorPane);
-//                        }else
-//                            if (c2 == 'P') {
-//                            pv2 = (PlaceView) drawingAreaAnchorPane.lookup(
-//                                    "#" + LinkNodes.getValue().toUpperCase());
-//                            Arrow arrow = new Arrow(getPlace(pv1.getPosition()) , getPlace(pv2.getPosition()));
-//                             //  arrow.getArrowView().getStyleClass().add("arrowspace");
-//
-//                            graph.addArrow(arrow);
-//                            drawingAreaAnchorPane.getChildren().clear();
-//                            graph.paint(drawingAreaAnchorPane);
-//                        }
+
             } else {
                 AlertBox("Warning ", "Please Enter Correct place or transition ", "Warning");
             }
@@ -190,7 +180,7 @@ public class AnchoreController  {
         drawingAreaAnchorPane.getChildren().clear();
         System.out.println("X Y -->"+ ev.getX()+"--"+ ev.getY());
         //todo read the weight of the place
-        Place p =new  Place(new Position(ev.getX(), ev.getY()), "P" + countPlace,1);
+        Place p =new  Place(new Position(ev.getX(), ev.getY()), "P" + countPlace,0);
 
         //   p.setO
         p.getView().setId("P" + countPlace);
@@ -208,7 +198,7 @@ public class AnchoreController  {
         //        T1 =new Transition(new Position(ev.getX(),ev.getY()),"T"+count);
         drawingAreaAnchorPane.getChildren().clear();
         //todo enter the weight of the transition here
-        Transition transition =new Transition(new Position(ev.getX(), ev.getY()), "T" + countTransition,0);
+        Transition transition =new Transition(new Position(ev.getX(), ev.getY()), "T" + countTransition,1);
         transition.getTrasitionView().setId("T"+countTransition);
         //    transition.getTrasitionView().getStyleClass().add("arrowspace");
 //

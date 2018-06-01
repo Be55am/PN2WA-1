@@ -14,13 +14,15 @@ public class PlaceView extends Group implements ShapeView{
 
     private Circle circle;
   // Rectangle circle;
-    private Label label;
+    //private Label label;
     private Text text;
+    private Text marking;
     private Position position;
     public AnchorPane anchorPane;
 
-    public PlaceView(Position position,String name){
+    public PlaceView(Position position,String name,int marking){
         this.position = position;
+        this.marking=new Text(position.getPositionX()-4,position.getPositionY()+5,String.valueOf(marking));
          circle=new Circle(position.getPositionX(),position.getPositionY(),20);
          DropShadow ds1 = new DropShadow();
          ds1.setOffsetY(2.0);
@@ -35,7 +37,7 @@ public class PlaceView extends Group implements ShapeView{
        //  circle.setStroke(Color.BLACK);
          text=new Text(position.getPositionX()-15,position.getPositionY()+30,name);
         // circle.setFill(null);
-        getChildren().addAll(circle,text);
+        getChildren().addAll(circle,text,this.marking);
     }
     @Override
     public void drow(AnchorPane anchorpane) {
@@ -47,9 +49,9 @@ public class PlaceView extends Group implements ShapeView{
         return circle;
     }
 
-    public Label getLabel() {
-        return label;
-    }
+//    public Label getLabel() {
+//        return label;
+//    }
 
     public Text getText() {
         return text;
@@ -59,13 +61,13 @@ public class PlaceView extends Group implements ShapeView{
         this.circle = circle;
     }
 
-    public void setText(String text) {
-        this.text = new Text(position.getPositionX()-15,position.getPositionY()+30,text);
+    public void setText(Text text) {
+        this.text =text;
     }
 
-    public void setLabel(Label label) {
-        this.label = label;
-    }
+ //   public void setLabel(Label label) {
+ //       this.label = label;
+  //  }
 
     public Position getPosition() {
         return position;
