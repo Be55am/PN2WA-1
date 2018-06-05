@@ -8,16 +8,19 @@ import javafx.scene.layout.Pane;
 
 public class Transition extends Shape {
     TransitionView trasitionView;
+    TransitionController controller;
+    private String event;
     /**
      * this class generate the transitions
      * @param position
      * @param name
      */
-    public Transition(Position position,String name,int weight) {
-        super(position,name,weight);
-        trasitionView=new TransitionView(position,name);
+    public Transition(Position position,String name,String event) {
+        super(position,name);
+        this.event=event;
+        trasitionView=new TransitionView(position,name,event);
 
-        TransitionController controller=new TransitionController(this);
+         controller=new TransitionController(this);
     }
 
     /**
@@ -34,5 +37,18 @@ public class Transition extends Shape {
      */
     public TransitionView getTrasitionView() {
         return trasitionView;
+    }
+
+    public String getEvent() {
+        return event;
+    }
+
+    public void setEvent(String event) {
+        this.event = event;
+    }
+
+    public void refrech(){
+        trasitionView=new TransitionView(this.getPosition(),this.getName(),this.event);
+        controller=new TransitionController(this);
     }
 }

@@ -4,6 +4,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 
 public class TransitionView extends javafx.scene.Group implements ShapeView{
 
@@ -11,7 +12,7 @@ public class TransitionView extends javafx.scene.Group implements ShapeView{
     Rectangle rectangle ;
     Text text;
 
-    public TransitionView(Position position,String name){
+    public TransitionView(Position position,String name,String event){
         super();
         this.position=position;
         rectangle=new Rectangle(position.getPositionX(),position.getPositionY(),35,20);
@@ -21,7 +22,8 @@ public class TransitionView extends javafx.scene.Group implements ShapeView{
         rectangle.setArcWidth(15);
         rectangle.setStyle("-fx-stroke-line-cap: butt;-fx-stroke-dash-offset: 6;-fx-stroke-dash-array: 12 2 4 2; -fx-stroke: blue;");
 
-        text=new Text(position.getPositionX()+10,position.getPositionY()+35,name);
+        text=new Text(position.getPositionX()+5,position.getPositionY()+35,name+":"+event);
+        text.setTextAlignment(TextAlignment.CENTER);
         getChildren().addAll(rectangle,text);
     }
 

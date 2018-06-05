@@ -7,13 +7,13 @@ import javafx.scene.Node;
 public class Shape extends Node{
     private Position position;
     private String name;
-    private int value;
 
 
-    public Shape(Position position,String name,int value){
+
+    public Shape(Position position,String name){
         this.position=position;
         this.name=name;
-        this.value=value;
+
     }
 
 
@@ -36,11 +36,4 @@ public class Shape extends Node{
 
     }
 
-    public int getValue() {
-        return value;
-    }
-
-    public void setValue(int value) {
-        this.value = value;
-    }
 }

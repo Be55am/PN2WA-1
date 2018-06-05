@@ -1,9 +1,16 @@
 package Controller;
 //package Controller;
+import MCGGeneration.IntMarking;
+import MCGGeneration.MCG;
+import MCGGeneration.MCGGenerator;
+import MCGGeneration.Matrix;
 import Views.PlaceView;
 import Views.Position;
 import Views.TransitionView;
+import WAConvertion.Converter;
+import WAConvertion.WeightedAutomata;
 import javafx.application.Platform;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -13,12 +20,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Pair;
-import model.Arrow;
-import model.Graph;
-import model.Place;
-import model.Transition;
+import model.*;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -28,28 +34,39 @@ public class AnchoreController  {
     // @FXML public Label source;
     @FXML private  AnchorPane drawingAreaAnchorPane;
     @FXML private ToggleGroup ChapeToggleGroup;
-    @FXML private RadioButton arrowRadio;
+    @FXML public  RadioButton arrowRadio;
     @FXML private RadioButton transitionRadio;
     @FXML private RadioButton placeRadio;
+
     public static  AnchorPane staticAnchorPane;
     private Transition T1;
+    public static boolean arrowButton;
     private int countTransition, countPlace , countArrow;
     public static Graph graph;
+
+    private static PetriNet petriNet;
+
+    public static Shape startingShape=null;
 
     public void initialize(){
         transitionRadio.setUserData(TypeChape.TRANSITION);
         placeRadio.setUserData(TypeChape.PLACE);
         arrowRadio.setUserData(TypeChape.ARROW);
+        arrowButton=arrowRadio.isSelected();
         countTransition=0;
         countPlace=0;
         countArrow= 0;
         graph=new Graph();
         //  graph.paint(drawingAreaAnchorPane);
         staticAnchorPane=drawingAreaAnchorPane;
+
+        arrowRadio.setOnMouseClicked(event -> arrowButton=arrowRadio.isSelected());
+        placeRadio.setOnMouseClicked(event -> arrowButton=arrowRadio.isSelected());
+        transitionRadio.setOnMouseClicked(event -> arrowButton=arrowRadio.isSelected());
     }
     @FXML
     public void DrawChapes(MouseEvent ev) {
-        if (placeRadio.isSelected() || arrowRadio.isSelected() || transitionRadio.isSelected()) {
+        if (placeRadio.isSelected()|| transitionRadio.isSelected()) {
 
             if (ChapeToggleGroup.getSelectedToggle().isSelected() &&
                     ChapeToggleGroup.getSelectedToggle().getUserData() == TypeChape.TRANSITION) {
@@ -60,10 +77,6 @@ public class AnchoreController  {
                     // Method Paint Transition
                 paintTransition(ev);
 
-
-            } else if (ChapeToggleGroup.getSelectedToggle().getUserData() == TypeChape.ARROW) {
-                //  Method paint Arrow
-                paintArrow();
 
             } else {
                 AlertBox("Look, a Warning Dialog", "Please select the shape do you want to drow!" , "Warning");
@@ -77,100 +90,56 @@ public class AnchoreController  {
 
     }
 
-    private void paintArrow() {
-        Dialog<Pair<String, String>> dialog = new Dialog<>();
-        dialog.setTitle("Draw Arrowo");
-        dialog.setHeaderText("Link The First Node to the Seconde");
+
+    public static void paintArrow(Shape shape) {
+     System.out.println("painting arrow ...");
+     if(startingShape==null){
+         startingShape=shape;
+     }else {
+         if((startingShape instanceof Place&shape instanceof Place)||(startingShape instanceof Transition &shape instanceof Transition)) {
+             //the first is a place
+
+             // the second is place too
+             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+             alert.setHeaderText("this is not how it works !");
+             alert.setContentText("the arrow should be between different objects .");
+
+             ButtonType retry = new ButtonType("Retry");
+             ButtonType cancel = new ButtonType("Cancel");
+             alert.getButtonTypes().setAll(retry, cancel);
+
+             Optional<ButtonType> result = alert.showAndWait();
+             if (result.get() == retry) {
+                 // the user clicked retry
+             } else {
+                 // the user clicked cancel
+                 startingShape = null;
+             }
+         }
+         else{
+             //the second is a transition
+             System.out.println("the arrow added ");
+             //todo insert weight here
+             Arrow arrow=new Arrow(startingShape,shape,1);
+             int res=graph.addArrow(arrow);
+             if(res==1) {
+                 graph.refrech();
+                 startingShape = null;
+                 arrowButton = false;
+             }else{
+                 Alert alert=new Alert(Alert.AlertType.ERROR);
+                 alert.setTitle("Oops ...");
+                 alert.setHeaderText("Arrow can't be added !");
+                 alert.setContentText("this arrow already exists :/");
+                 alert.showAndWait();
+                 startingShape=null;
+                 arrowButton=false;
+             }
+         }
+     }
 
 
-// Set the icon (must be included in the project).
-       dialog.setGraphic(new ImageView(this.getClass().getResource("/images/arrow.png").toString()));
-        Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
 
-// Add a custom icon.
-        stage.getIcons().add(new Image(this.getClass().getResource("/images/arrow-m.png").toString()));
-
-
-        ButtonType linkButtonType = new ButtonType("Link", ButtonBar.ButtonData.OK_DONE);
-        dialog.getDialogPane().getButtonTypes().addAll(linkButtonType, ButtonType.CANCEL);
-        GridPane grid = new GridPane();
-        grid.setHgap(8);
-        grid.setVgap(8);
-        grid.setPadding(new Insets(10, 80, 5, 5));
-
-        TextField FirstNodes = new TextField();
-        FirstNodes.setPromptText("Name of 1th Place / Transition)");
-        TextField password = new TextField();
-        password.setPromptText("(Name of 2nd Place / Transition)");
-
-        grid.add(new Label("1th Name of Place / Transition:"), 0, 0);
-        grid.add(FirstNodes, 1, 0);
-        grid.add(new Label("2nd Name of Place / Transition:"), 0, 1);
-        grid.add(password, 1, 1);
-
-//// Enable/Disable login button depending on whether a username was entered.
-//
-        Node linkButton = dialog.getDialogPane().lookupButton(linkButtonType);
-        linkButton.setDisable(true);
-//// Do some validation (using the Java 8 lambda syntax).
-        FirstNodes.textProperty().addListener((observable, oldValue, newValue) -> {
-            linkButton.setDisable(newValue.trim().isEmpty());
-        });
-
-        dialog.getDialogPane().setContent(grid);
-//
-//// Request focus on the username field by default.
-        Platform.runLater(() -> FirstNodes.requestFocus());
-
-//// Convert the result to a username-password-pair when the login button is clicked.
-        dialog.setResultConverter(dialogButton -> {
-            if (dialogButton == linkButtonType) {
-                return new Pair<>(FirstNodes.getText(), password.getText());
-            }
-            return null;
-        });
-
-        Optional<Pair<String, String>> result = dialog.showAndWait();
-
-        result.ifPresent(LinkNodes -> {
-            //   System.out.println("Username=" + LinkNodes.getKey() + ", Password=" + LinkNodes.getValue());
-            if(LinkNodes.getKey().length() != 0 && LinkNodes.getValue().length() != 0) {
-            char c1 = Character.toUpperCase((LinkNodes.getKey().charAt(0)));
-            char c2 = Character.toUpperCase(LinkNodes.getValue().charAt(0));
-            PlaceView pv1;
-            PlaceView pv2;
-            TransitionView tv1;
-            if (c1 == 'T' && c2 == 'P') {
-                tv1 = (TransitionView) drawingAreaAnchorPane.lookup(
-                        "#" + LinkNodes.getKey().toUpperCase());
-
-                pv1 = (PlaceView) drawingAreaAnchorPane.lookup(
-                        "#" + LinkNodes.getValue().toUpperCase());
-                Arrow arrow = new Arrow(getTransition(tv1.getPosition()), getPlace(pv1.getPosition()));
-                graph.addArrow(arrow);
-                drawingAreaAnchorPane.getChildren().clear();
-                graph.paint(drawingAreaAnchorPane);
-
-            } else if (c1 == 'P' && c2 == 'T') {
-                pv1 = (PlaceView) drawingAreaAnchorPane.lookup(
-                        "#" + LinkNodes.getKey().toUpperCase());
-
-                tv1 = (TransitionView) drawingAreaAnchorPane.lookup(
-                        "#" + LinkNodes.getValue().toUpperCase());
-                Arrow arrow =
-                        new Arrow(getPlace(pv1.getPosition()), getTransition(tv1.getPosition()));
-                graph.addArrow(arrow);
-                drawingAreaAnchorPane.getChildren().clear();
-                graph.paint(drawingAreaAnchorPane);
-
-            } else {
-                AlertBox("Warning ", "Please Enter Correct place or transition ", "Warning");
-            }
-        } else {
-                AlertBox("Warning ", "Please Enter Correct place or transition ", "Warning");
-
-            }
-        });
     }
 
     private void paintTransition(MouseEvent ev) {
@@ -198,7 +167,7 @@ public class AnchoreController  {
         //        T1 =new Transition(new Position(ev.getX(),ev.getY()),"T"+count);
         drawingAreaAnchorPane.getChildren().clear();
         //todo enter the weight of the transition here
-        Transition transition =new Transition(new Position(ev.getX(), ev.getY()), "T" + countTransition,1);
+        Transition transition =new Transition(new Position(ev.getX(), ev.getY()), "T" + countTransition,"");
         transition.getTrasitionView().setId("T"+countTransition);
         //    transition.getTrasitionView().getStyleClass().add("arrowspace");
 //
@@ -262,44 +231,114 @@ public class AnchoreController  {
         return  null;
     }
 
+    // todo make it happen
     @FXML
-    public int convert(){
-        System.out.print("saving Petri net ...");
-        File file=new File("test.txt");
-        System.out.println(file.getAbsolutePath());
+    public void convert(){
+       PetriNet net=new PetriNet(graph,"default");
+       System.out.println(net.toString());
+        MCGGenerator generator=new MCGGenerator(net.getName());
+        MCG mcg=generator.generateMCG(net);
+        System.out.println(mcg.toString());
+        Converter converter=new Converter(petriNet.getName());
+        WeightedAutomata wa=converter.Convert(net,mcg.getUnboundedPlaces());
+    }
+    public void open(){
 
-        DataOutputStream dos=null;
-        try{
-            dos=new DataOutputStream(new BufferedOutputStream(new FileOutputStream(file)));
-            dos.writeUTF("Test");
+    }
 
-            for (Transition t:graph.getTransitions()) {
-                dos.writeUTF(t.getName());
-            }
-            dos.writeUTF("\n");
-            for (Place p:graph.getPlaces()) {
-                dos.writeUTF(p.getName());
-            }
+    @FXML
+    public void save(){
+        FileChooser fileChooser = new FileChooser();
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TEXT files (*.txt)", "*.txt");
+        fileChooser.setSelectedExtensionFilter(extFilter);
+        File selected=fileChooser.showSaveDialog(drawingAreaAnchorPane.getScene().getWindow());
 
-            dos.flush();
-            dos.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }finally {
+        String pathname;
+        File file;
+        if(selected != null){
+            pathname=selected.getAbsolutePath();
+            System.out.println("saving file to "+pathname);
+            file=new File(pathname+".txt");
+            System.out.println(file.getAbsolutePath());
+            System.out.print("saving Petri net ...");
+            DataOutputStream dos=null;
             try{
-                if(dos!=null)
-                    dos.close();
-            }catch (IOException e){
+                dos=new DataOutputStream(new BufferedOutputStream(new FileOutputStream(file)));
+                dos.writeUTF("Pre");
+                System.out.println("Pre");
+                dos.writeUTF("\n");
+
+                for (Transition t:graph.getTransitions()) {
+                    dos.writeUTF(t.getName());
+                    System.out.print(t.getName()+" ");
+                }
+                dos.writeUTF("\n");
+                System.out.println();
+                for(Place p:graph.getPlaces()){
+                    dos.writeUTF(p.getName());
+                    System.out.print(p.getName()+" ");
+                    for (Transition t:graph.getTransitions()) {
+                        int weight=0;
+                        for (Arrow a:graph.getArrows()) {
+                            if(a.getStartingShape().equals(p)&a.getEndingShape().equals(t)){
+                                weight=a.getWeight();
+                            }
+                        }
+                        dos.write(weight);
+                        System.out.print(weight+" ");
+                    }
+                    dos.writeUTF("\n");
+                    System.out.println();
+                }
+                dos.writeUTF("\n");
+                dos.writeUTF("Post");
+                System.out.println("post");
+                dos.writeUTF("\n");
+                for (Transition t:graph.getTransitions()) {
+                    dos.writeUTF(t.getName());
+                    System.out.print(t.getName()+" ");
+                }
+                dos.writeUTF("\n");
+                System.out.println();
+                for(Place p:graph.getPlaces()){
+                    dos.writeUTF(p.getName());
+                    System.out.print(p.getName()+" ");
+                    for (Transition t:graph.getTransitions()) {
+                        int weight=0;
+                        for (Arrow a:graph.getArrows()) {
+                            if(a.getStartingShape().equals(t)&a.getEndingShape().equals(p)){
+                                weight=a.getWeight();
+                            }
+                        }
+                        dos.write(weight);
+                        System.out.print(weight+" ");
+                    }
+                    dos.writeUTF("\n");
+                    System.out.println();
+                }
+
+                System.out.print("M0=[");
+                for (Place p:graph.getPlaces()) {
+                    dos.write(p.getMarking());
+                    System.out.print(p.getMarking()+" ");
+                }
+                System.out.print("] \n");
+                dos.flush();
+                dos.close();
+            } catch (IOException e) {
                 e.printStackTrace();
+            }
+
+            finally {
+                try{
+                    if(dos!=null)
+                        dos.close();
+                }catch (IOException e){
+                    e.printStackTrace();
+                }
             }
         }
 
-
-
-
-
-
-        return 0;
     }
 
 

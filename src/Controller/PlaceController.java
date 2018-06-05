@@ -24,13 +24,14 @@ public class PlaceController {
         this.view = place.getView();
 //      here you can adjust the place of the dragg with the scene
         view.setOnMouseDragged(event -> {
-            view.relocate(event.getSceneX() - 200, event.getSceneY() - 80);
+            view.relocate(event.getSceneX() - 185, event.getSceneY() - 90);
 
             Position p = place.getPosition();
-            p.setPositionX(event.getSceneX() - 185);
-            p.setPositionY(event.getSceneY() - 90);
+            p.setPositionX(event.getSceneX() - 153);
+            p.setPositionY(event.getSceneY() - 60);
             place.setPosition(p);
         });
+        // for the right click menu
         view.setOnMouseClicked(event -> {
             if(event.getButton()== MouseButton.SECONDARY){
                 //creating a ContextMenu
@@ -43,15 +44,14 @@ public class PlaceController {
                 reName.setOnAction(event1 -> reName());
                 delete.setOnAction(event1 -> delete());
                 setMarking.setOnAction(event1 -> setMarking());
+            }else if(AnchoreController.arrowButton){
+                AnchoreController.paintArrow(this.place);
             }
-
-
-
         });
 
    }
 
-   //todo this doesn't work there is a probleme when you change the name it doesn't connect with the arcs
+
     public void reName(){
         TextInputDialog dialog=new TextInputDialog();
         dialog.setTitle("Rename");
@@ -85,7 +85,7 @@ public class PlaceController {
         if(result.isPresent()){
            int marking=Integer.valueOf(result.get());
            //AnchoreController.graph.deleteShape(place);
-             place.setValue(marking);
+             place.setMarking(marking);
              place.refrech();
            // AnchoreController.graph.addPlace(place);
             //place.getView().setText(new Text(place.getName()));
@@ -102,7 +102,7 @@ public class PlaceController {
         Optional<ButtonType>result=alert.showAndWait();
         if(result.get()==ButtonType.OK){
             //the user chose o  k
-            view.anchorPane.getChildren().remove(view);
+
             Graph.places.remove(place);
 
             ArrayList<Arrow> deletedArrows=new ArrayList<>();

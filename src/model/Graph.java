@@ -21,8 +21,14 @@ public  class Graph {
         transition.getPosition().connect(this);
     }
 
-    public void addArrow(Arrow arrow){
+    public int addArrow(Arrow arrow){
+        for (Arrow a:getArrows()) {
+            if(a.getStartingShape()==arrow.getStartingShape()&a.getEndingShape()==arrow.getEndingShape()){
+                return 0;
+            }
+        }
         arrows.add(arrow);
+        return 1;
     }
 
     public void deleteShape(Shape shape){

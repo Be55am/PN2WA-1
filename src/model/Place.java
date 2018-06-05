@@ -12,8 +12,11 @@ public class Place extends Shape{
     
     private PlaceView view;
     private PlaceController controller;
+    private int marking;
+
     public Place(Position position,String name,int marking) {
-        super(position,name,marking);
+        super(position,name);
+        this.marking=marking;
         view=new PlaceView(position,name,marking);
          controller=new PlaceController(this);
     }
@@ -25,7 +28,7 @@ public class Place extends Shape{
     }
 
     public void refrech(){
-        view=new PlaceView(this.getPosition(),this.getName(),this.getValue());
+        view=new PlaceView(this.getPosition(),this.getName(),this.getMarking());
          controller=new PlaceController(this);
     }
 
@@ -34,6 +37,11 @@ public class Place extends Shape{
         view.setText(new Text(view.getPosition().getPositionX(),view.getPosition().getPositionY(),name));
     }
 
+    public int getMarking() {
+        return marking;
+    }
 
-
+    public void setMarking(int marking) {
+        this.marking = marking;
+    }
 }

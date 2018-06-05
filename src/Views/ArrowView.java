@@ -1,18 +1,22 @@
 package Views;
 
+import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
+import javafx.scene.text.Text;
 
 /**
  *
  * @author kn
  */
-public class ArrowView extends Path{
+public class ArrowView extends Group{
     private static final double defaultArrowHeadSize = 5.0;
     private double startX,startY,endX,endY;
     private static final double RADIUS=15;
+    private Path path;
+    private int weight;
 
-    public ArrowView(double startX, double startY, double endX, double endY, double arrowHeadSize){
+    public ArrowView(double startX, double startY, double endX, double endY, double arrowHeadSize,int weight){
         super();
 
         //the added code
@@ -21,8 +25,10 @@ public class ArrowView extends Path{
         this.endX=endX;
         this.endY=endY;
 
-        strokeProperty().bind(fillProperty());
-        setFill(Color.BLUE);
+        path=new Path();
+
+        path.strokeProperty().bind(path.fillProperty());
+        path.setFill(Color.BLUE);
         setFocused(true);
 //
 //        Arc a1 = new Arc(startX, startY,
@@ -49,8 +55,8 @@ public class ArrowView extends Path{
 //        cubicTo.setY(endY);
 
         //Line
-        getElements().add(new MoveTo(startX, startY));
-        getElements().add(new LineTo(endX , endY));
+        path.getElements().add(new MoveTo(startX, startY));
+        path.getElements().add(new LineTo(endX , endY));
 /*
 Path path = new Path();
 
@@ -79,29 +85,41 @@ Path path = new Path();
         double x2 = (1.0 / 2.0 * cos + Math.sqrt(3) / 2 * sin) * arrowHeadSize + endX;
         double y2 = (1.0 / 2.0 * sin - Math.sqrt(3) / 2 * cos) * arrowHeadSize + endY;
 
-        getElements().add(new LineTo(x1, y1));
-         getElements().add(new LineTo(x2, y2));
-         getElements().add(new LineTo(endX, endY));
+        path.getElements().add(new LineTo(x1, y1));
+         path.getElements().add(new LineTo(x2, y2));
+         path.getElements().add(new LineTo(endX, endY));
+         this.getChildren().add(path);
+         double x=(startX+endX)/2;
+         double y=(startY+endY)/2;
+         //the weigh text
+
+        Text text=new Text(x,y,String.valueOf(weight));
+        this.getChildren().add(text);
 
        // initialize();
     }
 
-    public ArrowView(double startX, double startY, double endX, double endY){
-        this(startX, startY, endX, endY, defaultArrowHeadSize);
+    public ArrowView(double startX, double startY, double endX, double endY,int weight){
+        this(startX, startY, endX, endY, defaultArrowHeadSize,weight);
     }
-//todo this methode suppose to fix the problem of the arc but it fucks things up
-    private void initialize() {
-        double angle = Math.atan2(endY - startY, endX - startX) * 180 / 3.14;
-        double height = endY - startY;
-        double width = endX - startX;
-        double length = Math.sqrt(Math.pow(height, 2) + Math.pow(width, 2));
 
-        double subtractWidth = RADIUS * width / length;
-        double subtractHeight = RADIUS * height / length;
-        setRotate(angle );
-        setTranslateX(startX);
-        setTranslateY(startY);
-        setTranslateX(endX - subtractWidth);
-        setTranslateY(endY - subtractHeight);
+    public void setStartX(double startX) {
+        this.startX = startX;
+    }
+
+    public void setStartY(double startY) {
+        this.startY = startY;
+    }
+
+    public void setEndX(double endX) {
+        this.endX = endX;
+    }
+
+    public void setEndY(double endY) {
+        this.endY = endY;
+    }
+
+    public void setWeight(int weight) {
+        this.weight = weight;
     }
 }
