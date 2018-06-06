@@ -1,9 +1,6 @@
 package Controller;
 //package Controller;
-import MCGGeneration.IntMarking;
-import MCGGeneration.MCG;
-import MCGGeneration.MCGGenerator;
-import MCGGeneration.Matrix;
+import MCGGeneration.*;
 import Views.PlaceView;
 import Views.Position;
 import Views.TransitionView;
@@ -25,6 +22,8 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 import model.*;
+import model.Place;
+import model.Transition;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -234,22 +233,43 @@ public class AnchoreController  {
     // todo make it happen
     @FXML
     public void convert(){
-       PetriNet net=new PetriNet(graph,"default");
-       System.out.println(net.toString());
-        MCGGenerator generator=new MCGGenerator(net.getName());
-        MCG mcg=generator.generateMCG(net);
+
+        //remove this to open files
+        petriNet=new PetriNet(graph,"default");
+
+
+        graphGen generator=new graphGen(petriNet.getName());
+        MCG mcg=generator.generate(petriNet);
         System.out.println(mcg.toString());
         Converter converter=new Converter(petriNet.getName());
-        WeightedAutomata wa=converter.Convert(net,mcg.getUnboundedPlaces());
+        WeightedAutomata wa=converter.Convert(petriNet,mcg.getUnboundedPlaces());
     }
+    @FXML
     public void open(){
+        FileChooser fileChooser=new FileChooser();
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Petri net","*.spn"));
+        File selectedFile=fileChooser.showOpenDialog(drawingAreaAnchorPane.getScene().getWindow());
+        if(selectedFile!=null){
+           ObjectInputStream ois;
+           try {
+               ois=new ObjectInputStream(new BufferedInputStream(new FileInputStream(selectedFile)));
+               petriNet=(PetriNet)ois.readObject();
+               System.out.println(petriNet.toString());
+               graph=new Graph();
+               AnchoreController.staticAnchorPane.getChildren().clear();
+              // AnchoreController.graph.paint(AnchoreController.staticAnchorPane);
+           }catch(IOException | ClassNotFoundException e){
+               e.printStackTrace();
+           }
+        }
+
 
     }
 
     @FXML
     public void save(){
         FileChooser fileChooser = new FileChooser();
-        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TEXT files (*.txt)", "*.txt");
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Petri net (*.spn)", "*.spn");
         fileChooser.setSelectedExtensionFilter(extFilter);
         File selected=fileChooser.showSaveDialog(drawingAreaAnchorPane.getScene().getWindow());
 
@@ -258,86 +278,30 @@ public class AnchoreController  {
         if(selected != null){
             pathname=selected.getAbsolutePath();
             System.out.println("saving file to "+pathname);
-            file=new File(pathname+".txt");
+            file=new File(pathname);
             System.out.println(file.getAbsolutePath());
             System.out.print("saving Petri net ...");
-            DataOutputStream dos=null;
-            try{
-                dos=new DataOutputStream(new BufferedOutputStream(new FileOutputStream(file)));
-                dos.writeUTF("Pre");
-                System.out.println("Pre");
-                dos.writeUTF("\n");
+          ObjectOutputStream oos=null;
+          petriNet=new PetriNet(graph,"default");
+          try{
+              oos=new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file)));
+              oos.writeObject(petriNet);
 
-                for (Transition t:graph.getTransitions()) {
-                    dos.writeUTF(t.getName());
-                    System.out.print(t.getName()+" ");
-                }
-                dos.writeUTF("\n");
-                System.out.println();
-                for(Place p:graph.getPlaces()){
-                    dos.writeUTF(p.getName());
-                    System.out.print(p.getName()+" ");
-                    for (Transition t:graph.getTransitions()) {
-                        int weight=0;
-                        for (Arrow a:graph.getArrows()) {
-                            if(a.getStartingShape().equals(p)&a.getEndingShape().equals(t)){
-                                weight=a.getWeight();
-                            }
-                        }
-                        dos.write(weight);
-                        System.out.print(weight+" ");
-                    }
-                    dos.writeUTF("\n");
-                    System.out.println();
-                }
-                dos.writeUTF("\n");
-                dos.writeUTF("Post");
-                System.out.println("post");
-                dos.writeUTF("\n");
-                for (Transition t:graph.getTransitions()) {
-                    dos.writeUTF(t.getName());
-                    System.out.print(t.getName()+" ");
-                }
-                dos.writeUTF("\n");
-                System.out.println();
-                for(Place p:graph.getPlaces()){
-                    dos.writeUTF(p.getName());
-                    System.out.print(p.getName()+" ");
-                    for (Transition t:graph.getTransitions()) {
-                        int weight=0;
-                        for (Arrow a:graph.getArrows()) {
-                            if(a.getStartingShape().equals(t)&a.getEndingShape().equals(p)){
-                                weight=a.getWeight();
-                            }
-                        }
-                        dos.write(weight);
-                        System.out.print(weight+" ");
-                    }
-                    dos.writeUTF("\n");
-                    System.out.println();
-                }
+              oos.close();
 
-                System.out.print("M0=[");
-                for (Place p:graph.getPlaces()) {
-                    dos.write(p.getMarking());
-                    System.out.print(p.getMarking()+" ");
-                }
-                System.out.print("] \n");
-                dos.flush();
-                dos.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+          } catch (IOException e){
+              e.printStackTrace();
+          }finally {
+              try {
+                  if (oos != null) {
+                      oos.close();
+                  }
+              }catch (IOException e){
+                  e.printStackTrace();
+              }
+          }
 
-            finally {
-                try{
-                    if(dos!=null)
-                        dos.close();
-                }catch (IOException e){
-                    e.printStackTrace();
-                }
-            }
-        }
+       }
 
     }
 

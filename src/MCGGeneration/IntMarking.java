@@ -1,6 +1,8 @@
 package MCGGeneration;
 
-public class IntMarking implements Marking {
+import java.io.Serializable;
+
+public class IntMarking implements Marking,Serializable {
     private int value;
 
     public IntMarking(int value) {

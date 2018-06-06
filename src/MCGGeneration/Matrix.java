@@ -1,6 +1,8 @@
 package MCGGeneration;
 
-public class Matrix {
+import java.io.Serializable;
+
+public class Matrix implements Serializable{
 
     private String name;
     private Transition[] transitions;

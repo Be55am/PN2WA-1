@@ -20,6 +20,7 @@ public class Converter {
         this.automat.setAlphabet(net.getEvents());
         //2
 
+        System.out.println("Convertion calculating ...");
         automat.setIntervalsList(automat.intervalGenerator(net.getPre(unboundedPlace.getName())));
         for (Interval d:automat.getIntervalsList()) {
             System.out.println(d.print());

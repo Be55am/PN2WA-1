@@ -18,10 +18,6 @@ public class MCGGenerator {
 
 
     public MCG generateMCG(PetriNet net){
-
-
-
-
         //1
         Node m0=net.getInitialMarking();
         m0.setNewTag(true);

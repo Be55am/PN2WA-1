@@ -1,6 +1,8 @@
 package MCGGeneration;
 
-public class WMarking implements Marking {
+import java.io.Serializable;
+
+public class WMarking implements Marking,Serializable {
 
     private int k;
     private int r;

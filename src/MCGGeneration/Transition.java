@@ -3,7 +3,9 @@ package MCGGeneration;
 
 import model.Event;
 
-public class Transition {
+import java.io.Serializable;
+
+public class Transition implements Serializable {
 
     private String name;
     private Event event;

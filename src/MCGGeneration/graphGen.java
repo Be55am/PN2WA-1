@@ -26,13 +26,18 @@ public class graphGen {
         //2
         while (graph.getNewNode()!=null){
 
+            System.out.println("calculating...");
             //2.1
             Node q=graph.getNewNode();
             //2.2
             for (Event e:net.getEnabledEvents(q)) {
                 //2.2.1
+                String event=e.getName();
                 generatedNodes=net.generateNextMarking(q,e);
                 ArrayList<Transition> enabledTransitions=net.getEnabledTransitions(e,q);
+                for (Transition t:enabledTransitions) {
+                    String tr=t.getName();
+                }
                 //2.2.2
                 for (Node qPrim:generatedNodes) {
                     //2.2.2.1

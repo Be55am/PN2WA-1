@@ -8,7 +8,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class PetriNet {
+public class PetriNet implements Serializable{
 
     private String name;
     private Matrix pre;
@@ -79,34 +79,9 @@ public class PetriNet {
 
     }
 
-    public PetriNet(File file){
-
-        DataInputStream dis=null;
 
 
-        try{
-            dis=new DataInputStream(new BufferedInputStream(new FileInputStream(file)));
-            String name=dis.readUTF();
-            System.out.println("Petri net: "+name);
-            String name2=dis.readUTF();
-            System.out.println("Petri net: "+dis.readUTF());
 
-            System.out.println("Petri net: "+dis.readUTF());
-            System.out.println("Petri net: "+dis.readUTF());
-
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try{
-                if(dis!=null){
-                    dis.close();
-                }
-            }catch (IOException e){
-                e.printStackTrace();
-            }
-        }
-    }
 
     public String getName() {
         return name;
@@ -172,7 +147,7 @@ public class PetriNet {
 //                  //todo i think this one should be pre and not c
 //                  sum=c.getValues()[j][i]+v;
 //                  if(sum<0){
-                      b=true;
+                     // b=true;
 //                  }
 
               }
