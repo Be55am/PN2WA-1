@@ -46,4 +46,11 @@ public class Connection {
 
         return result;
     }
+    public String printTransitions(){
+        String result="";
+        for (Transition t:transitions) {
+            result+=t+" ";
+        }
+        return result;
+    }
 }

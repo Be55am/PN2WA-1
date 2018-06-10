@@ -4,7 +4,9 @@ import Views.Position;
 import Views.ShapeView;
 import javafx.scene.Node;
 
-public class Shape extends Node{
+import java.io.Serializable;
+
+public class Shape extends Node implements Serializable {
     private Position position;
     private String name;
 

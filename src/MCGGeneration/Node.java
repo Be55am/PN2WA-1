@@ -43,11 +43,22 @@ public class Node implements Serializable{
     }
 
     public String toString(){
-        String result="<node:"+name+" marking=[";
+        String result="     <node>\n";
+        result+="              <marking>[";
         for (Place p:places) {
             result+=p.toString()+" ";
         }
-        result+="]>";
+        result+="]</marking>\n";
+        result+="        </node>\n";
+        return result;
+    }
+
+    public String print(){
+        String result="[";
+        for (Place p:places) {
+            result+=p.toString()+" ";
+        }
+        result+="]";
         return result;
     }
 

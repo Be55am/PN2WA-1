@@ -49,10 +49,14 @@ public class graphGen {
                         Connection c=new Connection(q,qPrim,enabledTransitionsTemp);
                         graph.addConnection(c);
                     }else{
+                        Connection c;
+                        if(q.isEqual(qPrim)){
+                            c=new Connection(q,q,enabledTransitions);
+                        }else {
+                            c= new Connection(q, qPrim, enabledTransitions);
 
-                            Connection c=new Connection(q,qPrim,enabledTransitions);
-                            graph.addConnection(c);
-
+                        }
+                        graph.addConnection(c);
 
 
                     }

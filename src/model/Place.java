@@ -8,7 +8,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 
-public class Place extends Shape{
+import java.io.Serializable;
+
+public class Place extends Shape {
     
     private PlaceView view;
     private PlaceController controller;

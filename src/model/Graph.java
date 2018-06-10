@@ -1,15 +1,18 @@
 package model;
 
+import Controller.AnchoreController;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public  class Graph {
+public  class Graph implements Serializable {
 
     public static  ArrayList<Arrow> arrows=new ArrayList<>();
     public static  ArrayList<Place> places=new ArrayList<>();
     public static  ArrayList<Transition>transitions=new ArrayList<>();
-    private  AnchorPane Anchorpane;
+    //private  AnchorPane Anchorpane;
     private  String name;
 
     public void addPlace(Place place){
@@ -36,7 +39,7 @@ public  class Graph {
     }
 
     public void paint(AnchorPane Anchorpane){
-        this.Anchorpane=Anchorpane;
+       // this.Anchorpane=Anchorpane;
 
 
         for (Place place:places){
@@ -55,7 +58,7 @@ public  class Graph {
 
     public void refrech(){
         for (Arrow arrow:arrows) {
-            arrow.relocate(Anchorpane);
+            arrow.relocate(AnchoreController.staticAnchorPane);
         }
         /*
         for (Place place:places){

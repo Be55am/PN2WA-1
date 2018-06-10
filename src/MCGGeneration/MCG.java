@@ -21,17 +21,24 @@ public class MCG {
         connections.add(c);
     }
     public  String toString(){
-        String result="coverability graph :"+name;
-        result +="\n<Tree:"+this.name+">\n";
+        String result="<?xml version=\"1.0\"?>";
+        result +="\n<Tree>\n";
+        result+="   <Nodes>\n";
         for (Node node:nodes) {
 
             result+="   "+node.toString()+"\n";
 
         }
+        result+="   </Nodes>\n";
+        result+="   <Links>\n";
         for (Connection connection:connections) {
-            result+="   "+connection.toString()+"\n";
+            result+="       <link>\n";
+            result+="           <firstNode>"+connection.getStart().print()+"</firstNode>\n";
+            result+="           <secondNode>"+connection.getEnd().print()+"</secondNode>\n";
+            result+="           <transitions>{"+connection.printTransitions()+"}</transitions>\n";
+            result+="       </link>\n";
         }
-
+        result+="   </Links>";
 
 
         result+="\n</Tree>\n";
@@ -85,4 +92,5 @@ public class MCG {
         }
         return null;
     }
+
 }

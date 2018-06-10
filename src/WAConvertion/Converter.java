@@ -22,6 +22,7 @@ public class Converter {
 
         System.out.println("Convertion calculating ...");
         automat.setIntervalsList(automat.intervalGenerator(net.getPre(unboundedPlace.getName())));
+        //String name=unboundedPlace.getName();
         for (Interval d:automat.getIntervalsList()) {
             System.out.println(d.print());
         }
@@ -61,6 +62,7 @@ public class Converter {
                 System.out.println("delta = "+deltaM+" i= "+i+" j="+j);
                 //4.2.3
                 for(int y=i;y<=j;y++){
+                    System.out.println("calculating energy...");
                     //4.2.3.1
                     Node newN=new Node(null,waNewNode.getPlaces(),unboundedPlace,null,y,true);
                     //waNewNode.setEnergy(y);

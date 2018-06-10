@@ -316,6 +316,15 @@ public class PetriNet implements Serializable{
         System.out.println("place not found in get initial marking methode");
         return null;
     }
+    public Place getInitialUnboundedMarking(Place p){
+        for (Place place:initialMarking.getPlaces()) {
+            if(p.getName().equals(place.getName())){
+                return place;
+            }
+        }
+        System.out.println("unbounded place marking not found petriNet:getInitialUnboundedMarking().");
+        return null;
+    }
     public ArrayList<Node> generateNextMarking(Node q, Event e){
 
         ArrayList<Transition> eTransitions=e.getTransitions();

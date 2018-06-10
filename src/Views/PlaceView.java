@@ -10,7 +10,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 
-public class PlaceView extends Group implements ShapeView{
+import java.io.Serializable;
+
+public class PlaceView extends Group implements ShapeView,Serializable{
 
     private Circle circle;
   // Rectangle circle;

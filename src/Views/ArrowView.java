@@ -7,7 +7,7 @@ import javafx.scene.text.Text;
 
 /**
  *
- * @author kn
+ * @author be55am
  */
 public class ArrowView extends Group{
     private static final double defaultArrowHeadSize = 5.0;
@@ -27,8 +27,8 @@ public class ArrowView extends Group{
 
         path=new Path();
 
-        path.strokeProperty().bind(path.fillProperty());
-        path.setFill(Color.BLUE);
+       // path.strokeProperty().bind(path.fillProperty());
+        //path.setFill(Color.BLUE);
         setFocused(true);
 //
 //        Arc a1 = new Arc(startX, startY,
@@ -39,43 +39,23 @@ public class ArrowView extends Group{
 //        a1.setStrokeWidth(3);
 
       this.getStyleClass().add("arrowspace");
-//
-//        QuadCurveTo quadTo = new QuadCurveTo();
-//        quadTo.setControlX(25.0f);
-//        quadTo.setControlY(0.0f);
-//        quadTo.setX(endX);
-//        quadTo.setY(endY);
-
-//        CubicCurveTo cubicTo = new CubicCurveTo();
-//        cubicTo.setControlX1(50.0f);
-//        cubicTo.setControlY1(0.0f);
-//        cubicTo.setControlX2(100.0f);
-//        cubicTo.setControlY2(100.0f);
-//        cubicTo.setX(endX);
-//        cubicTo.setY(endY);
 
         //Line
         path.getElements().add(new MoveTo(startX, startY));
-        path.getElements().add(new LineTo(endX , endY));
-/*
-Path path = new Path();
+        QuadCurveTo quadCurveTo=new QuadCurveTo();
+        quadCurveTo.setX(endX);
+        quadCurveTo.setY(endY);
 
-    MoveTo moveTo = new MoveTo();
-    moveTo.setX(0.0f);
-    moveTo.setY(50.0f);
+        double controlX=(startX+endX)/2+(startY-endY)*0.4;
+        double controlY=(startY+endY)/2+(startX-endX)*0.4;
 
-    QuadCurveTo quadTo = new QuadCurveTo();
-    quadTo.setControlX(25.0f);
-    quadTo.setControlY(0.0f);
-    quadTo.setX(50.0f);
-    quadTo.setY(50.0f);
+        quadCurveTo.setControlX(controlX);
+        quadCurveTo.setControlY(controlY);
+        path.getElements().add(quadCurveTo);
+       // path.getElements().add(new LineTo(endX , endY));
 
-    path.getElements().add(moveTo);
-    path.getElements().add(quadTo);
-
- */
         //ArrowHead
-        double angle = Math.atan2((endY - startY), (endX - startX)) - Math.PI / 2.0;
+        double angle = Math.atan2((endY - controlY), (endX - controlX)) - Math.PI / 2.0;
         double sin = Math.sin(angle);
         double cos = Math.cos(angle);
         //point1
@@ -89,9 +69,10 @@ Path path = new Path();
          path.getElements().add(new LineTo(x2, y2));
          path.getElements().add(new LineTo(endX, endY));
          this.getChildren().add(path);
-         double x=(startX+endX)/2;
-         double y=(startY+endY)/2;
+
          //the weigh text
+        double x=(startX+endX)/2+(startY-endY)*0.2;
+        double y=(startY+endY)/2+(startX-endX)*0.2;
 
         Text text=new Text(x,y,String.valueOf(weight));
         this.getChildren().add(text);

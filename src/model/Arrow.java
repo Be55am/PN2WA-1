@@ -7,7 +7,9 @@ import Views.Position;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 
-public class Arrow {
+import java.io.Serializable;
+
+public class Arrow implements Serializable{
 
    private Shape startingShape,endingShape;
    private ArrowView arrowView;
@@ -21,7 +23,24 @@ public class Arrow {
         setWeight(weight);
         start=startingShape.getPosition();
         end=endingShape.getPosition();
-        this.arrowView=new ArrowView(start.getPositionX()-0,start.getPositionY()+0,end.getPositionX()+0,end.getPositionY(),weight);
+
+        double startX=start.getPositionX();
+        double startY=start.getPositionY();
+        double endX=end.getPositionX();
+        double endY=end.getPositionY();
+        if(endingShape instanceof Place){
+            if((startX-endX)<0)
+                endX=endX-15;
+            else endX=endX+15;
+
+            if((startY-endY)<0)
+                endY=endY-10;
+            else endY=endY+10;
+            startX+=10;
+            startY+=10;
+        }
+
+        this.arrowView=new ArrowView(startX,startY,endX,endY,weight);
         controller=new ArrowController(this);
     }
 
@@ -56,12 +75,59 @@ public class Arrow {
     }
     public void relocate(AnchorPane Anchorpane){
         Anchorpane.getChildren().remove(arrowView);
-//        arrowView.setStartX(start.getPositionX());
-//        arrowView.setStartY(start.getPositionY());
-//        arrowView.setEndX(end.getPositionX());
-//        arrowView.setEndY(end.getPositionY());
-//        arrowView.setWeight(weight);
-            arrowView=new ArrowView(start.getPositionX()-0,start.getPositionY()+0,end.getPositionX()+0,end.getPositionY()+0,weight);
+
+        double startX=start.getPositionX();
+        double startY=start.getPositionY();
+        double endX=end.getPositionX();
+        double endY=end.getPositionY();
+        if(endingShape instanceof Place){
+            if((startX-endX)<0) {
+                endX = endX - 17;
+                startX=startX+18;
+            }
+            else {
+                endX=endX+15;
+                startX-=13;
+            }
+
+            if((startY-endY)<0) {
+                endY=endY-10;
+                startY=startY+6;
+            }
+            else {
+                endY=endY+10;
+                startY=startY-5;
+            }
+            startX+=15;
+            startY+=10;
+
+
+        }else {
+            if((startX-endX)<0) {
+                endX = endX - 13;
+                startX=startX+8;
+            }
+            else {
+                endX=endX+15;
+                startX-=18;
+            }
+
+            if((startY-endY)<0) {
+                endY=endY-10;
+                startY=startY+13;
+            }
+            else {
+                endY=endY+10;
+                startY=startY-15;
+            }
+            endX+=15;
+            endY+=10;
+
+
+        }
+
+
+            arrowView=new ArrowView(startX,startY,endX,endY,weight);
             controller=new ArrowController(this);
         Anchorpane.getChildren().add(arrowView);
     }

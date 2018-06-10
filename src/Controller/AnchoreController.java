@@ -1,5 +1,7 @@
 package Controller;
 //package Controller;
+import CoverabilityGraphViewer.MyNode;
+import CoverabilityGraphViewer.XMLReader;
 import MCGGeneration.*;
 import Views.PlaceView;
 import Views.Position;
@@ -11,12 +13,14 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -25,11 +29,12 @@ import model.*;
 import model.Place;
 import model.Transition;
 
+import javax.xml.transform.TransformerException;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Optional;
 
-public class AnchoreController  {
+public class AnchoreController {
     // @FXML public Label source;
     @FXML private  AnchorPane drawingAreaAnchorPane;
     @FXML private ToggleGroup ChapeToggleGroup;
@@ -42,6 +47,8 @@ public class AnchoreController  {
     public static boolean arrowButton;
     private int countTransition, countPlace , countArrow;
     public static Graph graph;
+    private boolean opened=false;
+
 
     private static PetriNet petriNet;
 
@@ -235,14 +242,36 @@ public class AnchoreController  {
     public void convert(){
 
         //remove this to open files
+        if(!opened)
         petriNet=new PetriNet(graph,"default");
 
-
+        opened=false;
         graphGen generator=new graphGen(petriNet.getName());
         MCG mcg=generator.generate(petriNet);
+        BufferedWriter writer=null;
+        try{
+            File coverabilityFile=new File("coverabilityGraph.xml");
+             writer=new BufferedWriter(new FileWriter(coverabilityFile));
+            writer.write(mcg.toString());
+            writer.flush();
+            writer.close();
+
+        }catch (IOException e){
+            e.printStackTrace();
+        }finally {
+            try {
+                if (writer != null)
+                    writer.close();
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+        }
         System.out.println(mcg.toString());
         Converter converter=new Converter(petriNet.getName());
-        WeightedAutomata wa=converter.Convert(petriNet,mcg.getUnboundedPlaces());
+        WeightedAutomata wa=converter.Convert(petriNet,petriNet.getInitialUnboundedMarking(mcg.getUnboundedPlaces()));
+        System.out.println(wa.print());
+        drawCoverabilityGraph();
+
     }
     @FXML
     public void open(){
@@ -253,11 +282,16 @@ public class AnchoreController  {
            ObjectInputStream ois;
            try {
                ois=new ObjectInputStream(new BufferedInputStream(new FileInputStream(selectedFile)));
+              // graph=(Graph)ois.readObject();
+
+               System.out.println("Opening the saved project ...");
                petriNet=(PetriNet)ois.readObject();
+               opened=true;
+
                System.out.println(petriNet.toString());
-               graph=new Graph();
-               AnchoreController.staticAnchorPane.getChildren().clear();
-              // AnchoreController.graph.paint(AnchoreController.staticAnchorPane);
+              // graph=new Graph();
+               staticAnchorPane.getChildren().clear();
+               //graph.paint(staticAnchorPane);
            }catch(IOException | ClassNotFoundException e){
                e.printStackTrace();
            }
@@ -303,6 +337,29 @@ public class AnchoreController  {
 
        }
 
+    }
+
+    public void drawCoverabilityGraph(){
+        Stage stage=new Stage();
+        XMLReader reader = new XMLReader();
+        try {
+            reader.PrintTreeMGC();
+        } catch (TransformerException e) {
+            e.printStackTrace();
+        }
+        MyNode node = reader.getGraoh();
+//        String css = this.getClass().getResource("E://style.css").toExternalForm();
+//        node.setstgetStylesheets().add("E://style.css");
+        StackPane root = new StackPane();
+        root.getChildren().add(node);
+        ScrollPane sp = new ScrollPane(root);
+        Scene scene = new Scene(sp);
+
+
+        stage.setScene(scene);
+        stage.show();
+        AnchorPane  linesHolder = reader.getLinesHolder(node);
+        root.getChildren().add(0, linesHolder);
     }
 
 
