@@ -52,7 +52,10 @@ public class graphGen {
                         Connection c;
                         if(q.isEqual(qPrim)){
                             c=new Connection(q,q,enabledTransitions);
-                        }else {
+                        }else if(graph.contain(qPrim)!=null){
+                            c=new Connection(q,graph.contain(qPrim),enabledTransitions);
+                        }
+                        else {
                             c= new Connection(q, qPrim, enabledTransitions);
 
                         }
@@ -80,7 +83,11 @@ public class graphGen {
                                                 WMarking wm = new WMarking(k, r, n);
                                                 qPrim.getPlaces()[i].setM(wm);
 
-                                                for (Place p:unboundedPlaces) {
+                                                if(unboundedPlaces.size()==0){
+                                                    unboundedPlaces.add(qPrim.getWPlace());
+                                                }
+                                                for (int j=0;j<unboundedPlaces.size();j++) {
+                                                    Place p=unboundedPlaces.get(j);
                                                     if(!p.getName().equals(qPrim.getPlaces()[i].getName())){
                                                         unboundedPlaces.add(qPrim.getPlaces()[i]);
                                                     }

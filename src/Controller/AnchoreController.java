@@ -1,5 +1,6 @@
 package Controller;
 //package Controller;
+import CoverabilityGraphViewer.AnimatedZoomOperator;
 import CoverabilityGraphViewer.MyNode;
 import CoverabilityGraphViewer.XMLReader;
 import MCGGeneration.*;
@@ -10,6 +11,7 @@ import WAConvertion.Converter;
 import WAConvertion.WeightedAutomata;
 import javafx.application.Platform;
 import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -18,6 +20,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
@@ -168,21 +171,33 @@ public class AnchoreController {
     }
 
     private void paintPlace(MouseEvent ev) {
-        //   Place shape1=new Place(new Position(ev.getX(),ev.getY()),"p"+count);
-        countTransition++;
-        //        T1 =new Transition(new Position(ev.getX(),ev.getY()),"T"+count);
-        drawingAreaAnchorPane.getChildren().clear();
+
         //todo enter the weight of the transition here
-        Transition transition =new Transition(new Position(ev.getX(), ev.getY()), "T" + countTransition,"");
-        transition.getTrasitionView().setId("T"+countTransition);
-        //    transition.getTrasitionView().getStyleClass().add("arrowspace");
+        TextInputDialog dialog =new TextInputDialog();
+        dialog.setTitle("Set Event");
+        dialog.setHeaderText("Enter event for this transition");
+        dialog.setContentText("Please enter event name :");
+
+        Optional<String>result=dialog.showAndWait();
+        if(result.isPresent()){
+            //   Place shape1=new Place(new Position(ev.getX(),ev.getY()),"p"+count);
+            countTransition++;
+            //        T1 =new Transition(new Position(ev.getX(),ev.getY()),"T"+count);
+            drawingAreaAnchorPane.getChildren().clear();
+            Transition transition =new Transition(new Position(ev.getX(), ev.getY()), "T" + countTransition,result.get());
+            transition.getTrasitionView().setId("T"+countTransition);
+            //    transition.getTrasitionView().getStyleClass().add("arrowspace");
 //
 //                      "  border:solid 5px #000;" +
 //                      "  border-color:#000 transparent transparent transparent;" +
 //                      "  border-radius: 50%/100px 100px 0 0;" +
 //                      "");
-        graph.addTransition(transition);
-        graph.paint(drawingAreaAnchorPane);
+            graph.addTransition(transition);
+            graph.paint(drawingAreaAnchorPane);
+        }
+
+
+
     }
 
     private void AlertBox(String Header, String Content , String Type) {
@@ -239,7 +254,7 @@ public class AnchoreController {
 
     // todo make it happen
     @FXML
-    public void convert(){
+    public void convert() throws UnboundedPlaceException {
 
         //remove this to open files
         if(!opened)
@@ -248,29 +263,37 @@ public class AnchoreController {
         opened=false;
         graphGen generator=new graphGen(petriNet.getName());
         MCG mcg=generator.generate(petriNet);
-        BufferedWriter writer=null;
-        try{
-            File coverabilityFile=new File("coverabilityGraph.xml");
-             writer=new BufferedWriter(new FileWriter(coverabilityFile));
-            writer.write(mcg.toString());
-            writer.flush();
-            writer.close();
+        if(mcg==null){
+            throw new UnboundedPlaceException();
+        }else{
 
-        }catch (IOException e){
-            e.printStackTrace();
-        }finally {
-            try {
-                if (writer != null)
-                    writer.close();
+
+            BufferedWriter writer=null;
+            try{
+                File coverabilityFile=new File("coverabilityGraph.xml");
+                writer=new BufferedWriter(new FileWriter(coverabilityFile));
+                writer.write(mcg.toString());
+                writer.flush();
+                writer.close();
+
             }catch (IOException e){
                 e.printStackTrace();
+            }finally {
+                try {
+                    if (writer != null)
+                        writer.close();
+                }catch (IOException e){
+                    e.printStackTrace();
+                }
             }
+            drawCoverabilityGraph();
         }
+
+
         System.out.println(mcg.toString());
         Converter converter=new Converter(petriNet.getName());
         WeightedAutomata wa=converter.Convert(petriNet,petriNet.getInitialUnboundedMarking(mcg.getUnboundedPlaces()));
         System.out.println(wa.print());
-        drawCoverabilityGraph();
 
     }
     @FXML
@@ -338,6 +361,36 @@ public class AnchoreController {
        }
 
     }
+    @FXML
+    public void generateCoverabilityGraph(){
+        //remove this to open files
+        if(!opened)
+            petriNet=new PetriNet(graph,"default");
+
+        opened=false;
+        graphGen generator=new graphGen(petriNet.getName());
+        MCG mcg=generator.generate(petriNet);
+        BufferedWriter writer=null;
+        try{
+            File coverabilityFile=new File("coverabilityGraph.xml");
+            writer=new BufferedWriter(new FileWriter(coverabilityFile));
+            writer.write(mcg.toString());
+            writer.flush();
+            writer.close();
+
+        }catch (IOException e){
+            e.printStackTrace();
+        }finally {
+            try {
+                if (writer != null)
+                    writer.close();
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+        }
+        drawCoverabilityGraph();
+
+    }
 
     public void drawCoverabilityGraph(){
         Stage stage=new Stage();
@@ -353,6 +406,28 @@ public class AnchoreController {
         StackPane root = new StackPane();
         root.getChildren().add(node);
         ScrollPane sp = new ScrollPane(root);
+
+        AnimatedZoomOperator zoomOperator = new AnimatedZoomOperator();
+        AnimatedZoomOperator zoomOperator2 = new AnimatedZoomOperator();
+
+        sp.addEventFilter(ScrollEvent.SCROLL, new EventHandler<ScrollEvent>() {
+            @Override
+            public void handle(ScrollEvent event) {
+                if(event.isControlDown()){
+                    double zoomFactor = 1.5;
+                    if (event.getDeltaY() <= 0) {
+                        // zoom out
+                        zoomFactor = 1 / zoomFactor;
+                    }
+                    for (Node n:root.getChildren()) {
+                        zoomOperator.zoom(n, zoomFactor, event.getSceneX(), event.getSceneY());
+                    }
+                    zoomOperator2.zoom(node, zoomFactor, event.getSceneX(), event.getSceneY());
+
+                }
+            }
+        });
+
         Scene scene = new Scene(sp);
 
 
@@ -360,6 +435,30 @@ public class AnchoreController {
         stage.show();
         AnchorPane  linesHolder = reader.getLinesHolder(node);
         root.getChildren().add(0, linesHolder);
+
+
+// Listen to scroll events (similarly you could listen to a button click, slider, ...)
+        scene.setOnScroll(new EventHandler<ScrollEvent>() {
+            @Override
+
+            public void handle(ScrollEvent event) {
+                if(event.isControlDown()){
+                    double zoomFactor = 1.5;
+                    if (event.getDeltaY() <= 0) {
+                        // zoom out
+                        zoomFactor = 1 / zoomFactor;
+                    }
+
+
+                    for (Node n:root.getChildren()) {
+                        zoomOperator.zoom(n, zoomFactor, event.getSceneX(), event.getSceneY());
+                    }
+                    zoomOperator2.zoom(node, zoomFactor, event.getSceneX(), event.getSceneY());
+
+                }
+            }
+        });
+
     }
 
 

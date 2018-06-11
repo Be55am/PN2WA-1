@@ -93,4 +93,13 @@ public class MCG {
         return null;
     }
 
+    public Node contain(Node q){
+        for (Node n:nodes) {
+            if(n.isEqual(q)){
+                return n;
+            }
+        }
+        return null;
+    }
+
 }

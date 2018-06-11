@@ -7,6 +7,8 @@ import MCGGeneration.Transition;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 public class PetriNet implements Serializable{
 
@@ -272,18 +274,22 @@ public class PetriNet implements Serializable{
      * @return
      */
     public ArrayList<Integer> getPre(String place){
+        //todo we are removing the duplicated numbers im not sure if this is right or no
         ArrayList<Integer> res=new ArrayList();
         for(int i=0;i<pre.getPlaces().length;i++){
             if(pre.getPlaces()[i].equals(place)){
                 for(int j=0;j<pre.getTransitions().length;j++){
-                    if(pre.getValues()[j][i]!=0){
-                        res.add(pre.getValues()[j][i]);
+                    if(pre.getValues()[i][j]!=0){
+                        res.add(pre.getValues()[i][j]);
                     }
                 }
             }
         }
-        Collections.sort(res);
-        return res;
+        SortedSet set=new TreeSet();
+        set.addAll(res);
+
+
+        return new ArrayList<>(set);
     }
     /**
      * delta is the sum of the enabled transitions x unbounded place in the c matrix

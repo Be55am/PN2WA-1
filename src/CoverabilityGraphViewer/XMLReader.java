@@ -36,7 +36,7 @@ public class XMLReader {
             return null;
         }
 
-        rootNode = new MyNode(" marking Tree");
+        rootNode = new MyNode(" Coverability Graph");
         while (!nodeList.filtered(n -> !n.isUsed()).isEmpty()) {
             MyNode node = nodeList.filtered(n -> !n.isUsed()).get(0);
             node.setUsed(true);

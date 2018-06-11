@@ -86,6 +86,7 @@
                </graphic>
             </Button>
             <Button mnemonicParsing="false" onAction="#convert" prefHeight="26.0" prefWidth="184.0" text="Convert" />
+            <Button mnemonicParsing="false" onAction="#generateCoverabilityGraph" prefHeight="49.0" prefWidth="143.0" text="Generate Coverability Graph" textAlignment="CENTER" wrapText="true" />
         </children>
     </VBox>
     <AnchorPane fx:id="drawingAreaAnchorPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#DrawChapes" style="-fx-background-color: white;" GridPane.columnIndex="2" GridPane.rowIndex="1" />

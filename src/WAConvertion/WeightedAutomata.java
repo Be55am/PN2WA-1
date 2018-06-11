@@ -74,6 +74,9 @@ public class WeightedAutomata {
     //todo recheck
     public ArrayList<Interval> intervalGenerator(ArrayList<Integer> val){
         ArrayList<Interval> res=new ArrayList<>();
+        for (Integer in:val) {
+            System.out.println(in);
+        }
         Interval interval0 =new Interval(0,val.get(0)-1);
 
         res.add(interval0);
