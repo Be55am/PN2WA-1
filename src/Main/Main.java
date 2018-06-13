@@ -27,7 +27,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("../Views/AppGUI.fxml"));
-        primaryStage.setTitle("Hello World");
+        primaryStage.setTitle("SynPNtoWA");
         Scene scene =new Scene(root);
         scene.getStylesheets().add("style.css");
         primaryStage.setScene(scene);

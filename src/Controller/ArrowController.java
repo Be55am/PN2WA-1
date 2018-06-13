@@ -48,9 +48,9 @@ public class ArrowController {
             arrow.relocate(AnchoreController.staticAnchorPane);
             // AnchoreController.graph.addPlace(place);
             //place.getView().setText(new Text(place.getName()));
-
             AnchoreController.staticAnchorPane.getChildren().clear();
             AnchoreController.graph.paint(AnchoreController.staticAnchorPane);
+
         }
     }
 

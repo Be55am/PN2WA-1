@@ -20,11 +20,20 @@ public class TransitionController {
         this.view=transition.getTrasitionView();
 
         view.setOnMouseDragged(event ->{
-            view.relocate(event.getSceneX()-190,event.getSceneY()-50);
+            double x = event.getSceneX()-190 ;
+            double y = event.getSceneY()-60;
+            if (x < 0){
+                x= AnchoreController.staticAnchorPane.getLayoutX()-175;
+            }
+            if (y < 0) {
+                y = AnchoreController.staticAnchorPane.getLayoutY() - 50;
+            }
+
+            view.relocate(x,y);
 
             Position p=transition.getPosition();
-            p.setPositionX(event.getSceneX()-190);
-            p.setPositionY(event.getSceneY()-50);
+            p.setPositionX(x);
+            p.setPositionY(y);
             transition.setPosition(p);
 
         } );

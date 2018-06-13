@@ -65,7 +65,7 @@ public class AnchoreController {
         countPlace=0;
         countArrow= 0;
         graph=new Graph();
-        //  graph.paint(drawingAreaAnchorPane);
+      //  graph.paint(drawingAreaAnchorPane);
         staticAnchorPane=drawingAreaAnchorPane;
 
         arrowRadio.setOnMouseClicked(event -> arrowButton=arrowRadio.isSelected());
@@ -325,7 +325,7 @@ public class AnchoreController {
                opened=true;
 
                System.out.println(petriNet.toString());
-              // graph=new Graph();
+              //graph=new Graph();
                drawingAreaAnchorPane.getChildren().clear();
                graph.paint(drawingAreaAnchorPane);
            }catch(IOException | ClassNotFoundException e){
@@ -379,7 +379,6 @@ public class AnchoreController {
         //remove this to open files
         if(!opened)
             petriNet=new PetriNet(graph,"default");
-
         opened=false;
         if(!petriNet.isDeterministic()){
             throw new NotDeterministicException();
