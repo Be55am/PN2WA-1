@@ -2,6 +2,7 @@ package Views;
 
 import javafx.scene.Group;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.effect.BlendMode;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.AnchorPane;
@@ -20,7 +21,7 @@ public class PlaceView extends Group implements ShapeView,Serializable{
     private Text text;
     private Text marking;
     private Position position;
-    public AnchorPane anchorPane;
+    public  AnchorPane anchorPane;
 
     public PlaceView(Position position,String name,int marking){
         this.position = position;
@@ -78,6 +79,5 @@ public class PlaceView extends Group implements ShapeView,Serializable{
     public void setPosition(Position position) {
         this.position = position;
     }
-
 
 }

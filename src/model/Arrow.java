@@ -74,6 +74,7 @@ public class Arrow implements Serializable{
 
     }
     public void relocate(AnchorPane Anchorpane){
+
         Anchorpane.getChildren().remove(arrowView);
 
         double startX=start.getPositionX();
