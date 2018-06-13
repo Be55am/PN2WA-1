@@ -44,7 +44,6 @@ public class MyNode extends VBox {
         markLabel.setText(mark);
         this.mark = mark;
     }
-
     private void initPane() {
         setSpacing(20);
         setPadding(new Insets(10));
@@ -129,7 +128,7 @@ public class MyNode extends VBox {
                     location.getY()
                     + transition.getNameLabel().localToParent(0, 0).getY()
             );
-            line.setStrokeWidth(3);
+            line.setStrokeWidth(2);
             line.setStroke(Color.GREEN);
 
             canvas.getChildren().add(line);

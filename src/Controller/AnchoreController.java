@@ -381,12 +381,28 @@ public class AnchoreController {
             petriNet=new PetriNet(graph,"default");
         opened=false;
         if(!petriNet.isDeterministic()){
-            throw new NotDeterministicException();
+            //throw new NotDeterministicException();
+            //System.out.println("More than one unbounded place Exception !");
+
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error ");
+            alert.setHeaderText("Oops, there is more than one unbounded Place ! ");
+            alert.setContentText("We support only one unbounded place ");
+
+            alert.showAndWait();
         }else {
             graphGen generator = new graphGen(petriNet.getName());
             MCG mcg = generator.generate(petriNet);
             if (mcg == null) {
-                throw new UnboundedPlaceException();
+                //throw new UnboundedPlaceException();
+                System.out.println("More than one unbounded place Exception !");
+
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error ");
+                alert.setHeaderText("Oops, there is more than one unbounded Place ! ");
+                alert.setContentText("We support only one unbounded place ");
+
+                alert.showAndWait();
             } else {
                 BufferedWriter writer = null;
                 try {

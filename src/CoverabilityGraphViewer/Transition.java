@@ -9,6 +9,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
+import model.Arrow;
 
 public class Transition extends VBox {
 
@@ -104,19 +105,23 @@ public class Transition extends VBox {
         }
 
         Line line;
+        ArrowHead row = null;
         Point2D StartLocation = nameLabel.localToScene(0, 0);
         Point2D endLocation = node.localToScene(0, 0);
 
         if (StartLocation.getY()
                 < endLocation.getY()) {
-            line = new Line(StartLocation.getX() + (nameLabel.getWidth() / 2),
+            row = new ArrowHead(
+                    StartLocation.getX() + (nameLabel.getWidth() / 2),
                     StartLocation.getY() + (nameLabel.getHeight()),
                     endLocation.getX() + (node.getWidth() / 2),
                     endLocation.getY()
-                    + node.getMarkLabel().localToParent(0, 0).getY()
+                            + node.getMarkLabel().localToParent(0, 0).getY()
             );
-            line.setStroke(Color.GREEN);
-            line.setStrokeWidth(3);
+            row.setFill(Color.GREEN);
+
+            canvas.getChildren().add(row);
+
         } else {
             line = new Line(StartLocation.getX(),
                     StartLocation.getY() + (nameLabel.getHeight()),
@@ -131,8 +136,9 @@ public class Transition extends VBox {
                     StartLocation.getY() + (nameLabel.getHeight()),
                     StartLocation.getX() - 30,
                     endLocation.getY()
-                    + node.getMarkLabel().localToParent(0, 0).getY()
+                            + node.getMarkLabel().localToParent(0, 0).getY()
             );
+
             line.setStroke(Color.RED);
 
             line.setStrokeWidth(2);
@@ -140,17 +146,22 @@ public class Transition extends VBox {
             line = new Line(
                     StartLocation.getX() - 30,
                     endLocation.getY()
+                            + node.getMarkLabel().localToParent(0, 0).getY(),
+                    endLocation.getX() + node.getMarkLabel().localToParent(0, 0).getX(),
+                    endLocation.getY()
+                            + node.getMarkLabel().localToParent(0, 0).getY()
+            );
+            row =new ArrowHead(StartLocation.getX() - 30,endLocation.getY()
                     + node.getMarkLabel().localToParent(0, 0).getY(),
                     endLocation.getX() + node.getMarkLabel().localToParent(0, 0).getX(),
                     endLocation.getY()
-                    + node.getMarkLabel().localToParent(0, 0).getY()
-            );
-            line.setStroke(Color.RED);
-            line.setStrokeWidth(2);
+                            + node.getMarkLabel().localToParent(0, 0).getY());
+//            line.setStroke(Color.RED);
+//            line.setStrokeWidth(1);
+            row.setFill(Color.RED);
+            canvas.getChildren().add(row);
         }
 
-        canvas.getChildren()
-                .add(line);
 
         return canvas;
     }
