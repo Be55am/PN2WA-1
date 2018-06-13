@@ -18,6 +18,9 @@ public class Converter {
     public WeightedAutomata Convert(PetriNet net, Place unboundedPlace){
         //1
         this.automat.setAlphabet(net.getEvents());
+        for (Event e:net.getEvents()) {
+            String ddfsd=e.getName();
+        }
         //2
 
         System.out.println("Convertion calculating ...");
@@ -38,7 +41,7 @@ public class Converter {
         int num=1;
         while (automat.getNewNode()!=null){
             //4.1
-            System.out.println("qmsdlkfjqsfmqlsdkj");
+           // System.out.println("qmsdlkfjqsfmqlsdkj");
             Node node=automat.getNewNode();
             //4.2
             for (Event e:automat.getAlphabet()) {

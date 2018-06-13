@@ -13,7 +13,7 @@ public class Transition implements Serializable {
     public Transition(String name,Event e){
         this.name=name;
         this.event=e;
-        e.addTransition(this);
+
 
     }
 

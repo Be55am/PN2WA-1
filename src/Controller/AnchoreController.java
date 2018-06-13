@@ -254,46 +254,60 @@ public class AnchoreController {
 
     // todo make it happen
     @FXML
-    public void convert() throws UnboundedPlaceException {
+    public void convert() throws UnboundedPlaceException, NoUnboundedPlaceException {
 
         //remove this to open files
         if(!opened)
         petriNet=new PetriNet(graph,"default");
 
         opened=false;
-        graphGen generator=new graphGen(petriNet.getName());
-        MCG mcg=generator.generate(petriNet);
-        if(mcg==null){
-            throw new UnboundedPlaceException();
-        }else{
-
-
-            BufferedWriter writer=null;
-            try{
-                File coverabilityFile=new File("coverabilityGraph.xml");
-                writer=new BufferedWriter(new FileWriter(coverabilityFile));
-                writer.write(mcg.toString());
-                writer.flush();
-                writer.close();
-
-            }catch (IOException e){
+        if(!petriNet.isDeterministic()){
+            try {
+                throw new NotDeterministicException();
+            } catch (NotDeterministicException e) {
                 e.printStackTrace();
-            }finally {
-                try {
-                    if (writer != null)
-                        writer.close();
-                }catch (IOException e){
-                    e.printStackTrace();
-                }
             }
-            drawCoverabilityGraph();
+        }else {
+            graphGen generator = new graphGen(petriNet.getName());
+            MCG mcg = generator.generate(petriNet);
+            if (mcg == null) {
+                throw new UnboundedPlaceException();
+            } else {
+
+
+                BufferedWriter writer = null;
+                try {
+                    File coverabilityFile = new File("coverabilityGraph.xml");
+                    writer = new BufferedWriter(new FileWriter(coverabilityFile));
+                    writer.write(mcg.toString());
+                    writer.flush();
+                    writer.close();
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } finally {
+                    try {
+                        if (writer != null)
+                            writer.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                drawCoverabilityGraph(mcg);
+            }
+
+
+            System.out.println(mcg.toString());
+            Converter converter = new Converter(petriNet.getName());
+            MCGGeneration.Place unboundedPlace=petriNet.getInitialUnboundedMarking(mcg.getUnboundedPlaces());
+            if(unboundedPlace==null){
+                throw new NoUnboundedPlaceException();
+            }else {
+                WeightedAutomata wa = converter.Convert(petriNet, unboundedPlace);
+                System.out.println(wa.print());
+            }
+
         }
-
-
-        System.out.println(mcg.toString());
-        Converter converter=new Converter(petriNet.getName());
-        WeightedAutomata wa=converter.Convert(petriNet,petriNet.getInitialUnboundedMarking(mcg.getUnboundedPlaces()));
-        System.out.println(wa.print());
 
     }
     @FXML
@@ -362,50 +376,62 @@ public class AnchoreController {
 
     }
     @FXML
-    public void generateCoverabilityGraph(){
+    public void generateCoverabilityGraph() throws UnboundedPlaceException, NotDeterministicException {
         //remove this to open files
         if(!opened)
             petriNet=new PetriNet(graph,"default");
 
         opened=false;
-        graphGen generator=new graphGen(petriNet.getName());
-        MCG mcg=generator.generate(petriNet);
-        BufferedWriter writer=null;
-        try{
-            File coverabilityFile=new File("coverabilityGraph.xml");
-            writer=new BufferedWriter(new FileWriter(coverabilityFile));
-            writer.write(mcg.toString());
-            writer.flush();
-            writer.close();
-
-        }catch (IOException e){
-            e.printStackTrace();
-        }finally {
-            try {
-                if (writer != null)
+        if(!petriNet.isDeterministic()){
+            throw new NotDeterministicException();
+        }else {
+            graphGen generator = new graphGen(petriNet.getName());
+            MCG mcg = generator.generate(petriNet);
+            if (mcg == null) {
+                throw new UnboundedPlaceException();
+            } else {
+                BufferedWriter writer = null;
+                try {
+                    File coverabilityFile = new File("coverabilityGraph.xml");
+                    writer = new BufferedWriter(new FileWriter(coverabilityFile));
+                    writer.write(mcg.toString());
+                    writer.flush();
                     writer.close();
-            }catch (IOException e){
-                e.printStackTrace();
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } finally {
+                    try {
+                        if (writer != null)
+                            writer.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                drawCoverabilityGraph(mcg);
             }
+
         }
-        drawCoverabilityGraph();
 
     }
 
-    public void drawCoverabilityGraph(){
+    public void drawCoverabilityGraph(MCG graph){
         Stage stage=new Stage();
         XMLReader reader = new XMLReader();
+
         try {
             reader.PrintTreeMGC();
         } catch (TransformerException e) {
             e.printStackTrace();
         }
         MyNode node = reader.getGraoh();
+
 //        String css = this.getClass().getResource("E://style.css").toExternalForm();
 //        node.setstgetStylesheets().add("E://style.css");
         StackPane root = new StackPane();
         root.getChildren().add(node);
         ScrollPane sp = new ScrollPane(root);
+
 
         AnimatedZoomOperator zoomOperator = new AnimatedZoomOperator();
         AnimatedZoomOperator zoomOperator2 = new AnimatedZoomOperator();
@@ -429,7 +455,7 @@ public class AnchoreController {
         });
 
         Scene scene = new Scene(sp);
-
+        new CoverabilityGraphController(scene,graph);
 
         stage.setScene(scene);
         stage.show();

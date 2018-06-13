@@ -1,5 +1,6 @@
 package model;
 
+import Controller.NoUnboundedPlaceException;
 import MCGGeneration.*;
 import MCGGeneration.Place;
 import MCGGeneration.Transition;
@@ -170,15 +171,22 @@ public class PetriNet implements Serializable{
         ArrayList<Transition> enabledTransitions=this.getEnabledTransitions(n);
         for (Transition t:enabledTransitions) {
             model.Event e=t.getEvent();
-            if(!result.contains(e)){
+            if(result.size()>0) {
+                for (int i = 0; i < result.size(); i++) {
+                    if (!result.get(i).getName().equals(e.getName())) {
+                        result.add(e);
+                    }
+                }
+            }else {
                 result.add(e);
             }
+
         }
         return result;
     }
 
     public ArrayList<Transition> getEnabledTransitions(Event e, Node n){
-        ArrayList<Transition> eTransitions=e.getTransitions();
+        ArrayList<Transition> eTransitions=getEventTransitions(e);
         ArrayList<Transition> enabledTrans=this.getEnabledTransitions(n);
         ArrayList<Transition> executionTrans=new ArrayList<>();
 
@@ -191,9 +199,20 @@ public class PetriNet implements Serializable{
 
         return executionTrans;
     }
+    //return the transitions associated to an event e
+    public ArrayList<Transition>getEventTransitions(Event e){
+        ArrayList<Transition> result=new ArrayList<>();
+        for (int i=0;i<this.pre.getTransitions().length;i++){
+            Transition t=this.pre.getTransitions()[i];
+            if(t.getEvent().getName().equals(e.getName())){
+                result.add(t);
+            }
+        }
+        return result;
+    }
 
     public Node executeEvent(Event e, Node n){
-        ArrayList<Transition> eTransitions=e.getTransitions();
+        ArrayList<Transition> eTransitions=getEventTransitions(e);
         ArrayList<Transition> enabledTrans=this.getEnabledTransitions(n);
         ArrayList<Transition> executionTrans=new ArrayList<>();
         Place[] result=new Place[n.getPlaces().length];
@@ -253,9 +272,18 @@ public class PetriNet implements Serializable{
     public ArrayList<Event> getEvents(){
         ArrayList<Event> result=new ArrayList<>();
         for (Transition t:pre.getTransitions()) {
-            if(!result.contains(t.getEvent())){
+            boolean b=false;
+            if(result.size()>0) {
+                for (int i = 0; i < result.size(); i++) {
+                    if (result.get(i).getName().equals(t.getEvent().getName())) {
+                        b = true;
+                    }
+                }
+                if (!b) {
+                    result.add(t.getEvent());
+                }
+            }else
                 result.add(t.getEvent());
-            }
 
         }
         return result;
@@ -322,18 +350,23 @@ public class PetriNet implements Serializable{
         System.out.println("place not found in get initial marking methode");
         return null;
     }
-    public Place getInitialUnboundedMarking(Place p){
-        for (Place place:initialMarking.getPlaces()) {
-            if(p.getName().equals(place.getName())){
-                return place;
+    public Place getInitialUnboundedMarking(Place p) throws NoUnboundedPlaceException {
+
+        if(p==null)
+            return null;
+
+        for (Place place : initialMarking.getPlaces()) {
+            if (p.getName().equals(place.getName())) {
+                    return place;
             }
         }
+
         System.out.println("unbounded place marking not found petriNet:getInitialUnboundedMarking().");
         return null;
     }
     public ArrayList<Node> generateNextMarking(Node q, Event e){
 
-        ArrayList<Transition> eTransitions=e.getTransitions();
+        ArrayList<Transition> eTransitions=getEventTransitions(e);
         ArrayList<Transition> enabledTrans=this.getEnabledTransitions(q);
         ArrayList<Transition> executionTrans=new ArrayList<>();
         Place[] result=new Place[q.getPlaces().length];
@@ -417,6 +450,13 @@ public class PetriNet implements Serializable{
                 Node n2=new Node(null,result);
                 resultat.addAll(generateNextMarking(n2,e));
 
+                //this block removes the duplicated nodes
+                if(resultat.size()>2)
+                for(int i=0;i<resultat.size()-1;i++){
+                    if(resultat.get(i).isEqual(resultat.get(i+1)));
+                    resultat.remove(resultat.get(i));
+                }
+
 
 
 
@@ -497,6 +537,24 @@ public class PetriNet implements Serializable{
         }
         System.out.println("no transition found : getPreTransition()");
         return null;
+    }
+
+    public boolean isDeterministic(){
+        for (int i = 0; i <pre.getPlaces().length ; i++) {
+            for (int j = 0; j < pre.getTransitions().length; j++) {
+                if(pre.getValues()[i][j]!=0) {
+                    Transition t = pre.getTransitions()[j];
+                    for (int k = 0; k < pre.getTransitions().length; k++) {
+                        if (pre.getValues()[i][k] != 0) {
+                            if (j != k & pre.getTransitions()[k].getEvent().getName().equals(t.getEvent().getName())){
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return true;
     }
 
 }
