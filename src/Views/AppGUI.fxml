@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.Cursor?>
@@ -22,162 +30,148 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane hgap="8.0" prefHeight="480.0" prefWidth="640.0" vgap="8.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.AnchoreController">
-<columnConstraints>
-    <ColumnConstraints />
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="148.0" minWidth="126.0" prefWidth="148.0" />
-      <ColumnConstraints hgrow="SOMETIMES" maxWidth="490.0" minWidth="462.0" prefWidth="462.0" />
-</columnConstraints>
-<rowConstraints>
-      <RowConstraints />
-    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-</rowConstraints>
-<children>
-    <VBox maxHeight="1.7976931348623157E308" maxWidth="-Infinity" prefHeight="417.0" prefWidth="143.0" spacing="15.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
-        <children>
-            <TitledPane maxWidth="1.7976931348623157E308" text="Drawing Shapes">
-                <content>
-                    <VBox spacing="10.0">
-                        <children>
-                            <RadioButton fx:id="placeRadio" mnemonicParsing="false" text="Place">
-                           <toggleGroup>
-                              <ToggleGroup fx:id="ChapeToggleGroup" />
-                           </toggleGroup>
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </RadioButton>
-                            <RadioButton fx:id="transitionRadio" mnemonicParsing="false" text="Transition" toggleGroup="$ChapeToggleGroup">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </RadioButton>
-                            <RadioButton fx:id="arrowRadio" mnemonicParsing="false" text="Arrow" toggleGroup="$ChapeToggleGroup">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </RadioButton>
-                        </children>
-                    </VBox>
-                </content>
-            </TitledPane>
-            <Button fx:id="undoBtn" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Undo" textFill="#005599">
-                <VBox.margin>
-                    <Insets />
-                </VBox.margin>
-               <graphic>
-                  <ImageView fitHeight="18.0" fitWidth="29.0">
-                     <image>
-                        <Image url="@../images/undo.png" />
-                     </image>
-                     <viewport>
-                        <Rectangle2D />
-                     </viewport>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Button fx:id="clearBtn" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#HandleClearArea" style="-fx-background-image: url(&quot;/recycle.png&quot;);" text="Clear" textFill="#e50000" textOverrun="CLIP">
-               <graphic>
-                  <ImageView fitHeight="19.0" fitWidth="19.0">
-                     <image>
-                        <Image url="@../images/recycle.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Button mnemonicParsing="false" onAction="#convert" prefHeight="26.0" prefWidth="184.0" text="Convert" />
-            <Button mnemonicParsing="false" onAction="#generateCoverabilityGraph" prefHeight="49.0" prefWidth="143.0" text="Generate Coverability Graph" textAlignment="CENTER" wrapText="true" />
-        </children>
-    </VBox>
-    <AnchorPane fx:id="drawingAreaAnchorPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#DrawChapes" style="-fx-background-color: white;" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-      <VBox maxWidth="1.7976931348623157E308" spacing="8.0" style="-fx-background-color: red;" GridPane.columnIndex="1" GridPane.columnSpan="2">
-         <children>
-            <HBox maxWidth="1.7976931348623157E308" spacing="8.0" style="-fx-background-color: red;">
-               <children>
-                  <MenuBar prefHeight="29.0" prefWidth="627.0">
-                    <menus>
-                      <Menu mnemonicParsing="false" text="File">
-                        <items>
-                          <MenuItem mnemonicParsing="false" onAction="#save" text="Save..." />
-                              <MenuItem mnemonicParsing="false" onAction="#open" text="Open..." />
-                        </items>
-                      </Menu>
-                      <Menu mnemonicParsing="false" text="Edit">
-                        <items>
-                          <MenuItem mnemonicParsing="false" text="Delete" />
-                        </items>
-                      </Menu>
-                      <Menu mnemonicParsing="false" text="Help">
-                        <items>
-                          <MenuItem mnemonicParsing="false" text="About" />
-                        </items>
-                      </Menu>
-                        <Menu mnemonicParsing="false" text="File">
-                           <items>
-                              <MenuItem mnemonicParsing="false" text="Close" />
-                           </items>
-                        </Menu>
-                        <Menu mnemonicParsing="false" text="Edit">
-                           <items>
-                              <MenuItem mnemonicParsing="false" text="Delete" />
-                           </items>
-                        </Menu>
-                        <Menu mnemonicParsing="false" text="Help">
-                           <items>
-                              <MenuItem mnemonicParsing="false" text="About" />
-                           </items>
-                        </Menu>
-                        <Menu mnemonicParsing="false" text="File">
-                           <items>
-                              <MenuItem mnemonicParsing="false" text="Close" />
-                           </items>
-                        </Menu>
-                        <Menu mnemonicParsing="false" text="File">
-                           <items>
-                              <MenuItem mnemonicParsing="false" text="Close" />
-                           </items>
-                        </Menu>
-                        <Menu mnemonicParsing="false" text="File">
-                           <items>
-                              <MenuItem mnemonicParsing="false" text="Close" />
-                           </items>
-                        </Menu>
-                        <Menu mnemonicParsing="false" text="File">
-                           <items>
-                              <MenuItem mnemonicParsing="false" text="Close" />
-                           </items>
-                        </Menu>
-                        <Menu mnemonicParsing="false" text="File">
-                           <items>
-                              <MenuItem mnemonicParsing="false" text="Close" />
-                           </items>
-                        </Menu>
-                        <Menu mnemonicParsing="false" text="File">
-                           <items>
-                              <MenuItem mnemonicParsing="false" text="Close" />
-                           </items>
-                        </Menu>
-                    </menus>
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                     <effect>
-                        <MotionBlur radius="0.75">
-                           <input>
-                              <DropShadow />
-                           </input>
-                        </MotionBlur>
-                     </effect>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </MenuBar>
-               </children>
-            </HBox>
-         </children>
-      </VBox>
-</children>
-<padding>
-    <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-</padding>
+<GridPane hgap="8.0" prefHeight="541.0" prefWidth="785.0" vgap="8.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.AnchoreController">
+    <columnConstraints>
+        <ColumnConstraints />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="148.0" minWidth="126.0" prefWidth="148.0" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="605.0" minWidth="-Infinity" prefWidth="605.0" />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints />
+        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="485.0" vgrow="SOMETIMES" />
+    </rowConstraints>
+    <children>
+        <VBox maxHeight="1.7976931348623157E308" maxWidth="-Infinity" prefHeight="417.0" prefWidth="143.0" spacing="15.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
+            <children>
+                <TitledPane maxWidth="1.7976931348623157E308" text="Drawing Shapes">
+                    <content>
+                        <VBox spacing="10.0">
+                            <children>
+                                <RadioButton fx:id="placeRadio" mnemonicParsing="false" text="Place">
+                                    <toggleGroup>
+                                        <ToggleGroup fx:id="ChapeToggleGroup" />
+                                    </toggleGroup>
+                                    <font>
+                                        <Font size="14.0" />
+                                    </font>
+                                </RadioButton>
+                                <RadioButton fx:id="transitionRadio" mnemonicParsing="false" text="Transition" toggleGroup="$ChapeToggleGroup">
+                                    <font>
+                                        <Font size="14.0" />
+                                    </font>
+                                </RadioButton>
+                                <RadioButton fx:id="arrowRadio" mnemonicParsing="false" text="Arrow" toggleGroup="$ChapeToggleGroup">
+                                    <font>
+                                        <Font size="14.0" />
+                                    </font>
+                                </RadioButton>
+                            </children>
+                        </VBox>
+                    </content>
+                </TitledPane>
+                <Button fx:id="undoBtn" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="35.0" text="Undo" textFill="#005599">
+                    <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="37.0">
+                            <image>
+                                <Image url="@../images/undo.png" />
+                            </image>
+                            <viewport>
+                                <Rectangle2D />
+                            </viewport>
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <Button fx:id="clearBtn" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#HandleClearArea" prefHeight="35.0" prefWidth="143.0" text="Clear" textFill="#e50000" textOverrun="CLIP">
+                    <graphic>
+                        <ImageView fitHeight="19.0" fitWidth="26.0">
+                            <image>
+                                <Image url="@../images/recycle.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <Button maxHeight="-Infinity" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#generateCoverabilityGraph" prefHeight="35.0" prefWidth="143.0" text="Generate CG" textAlignment="CENTER" wrapText="true">
+                    <graphic>
+                        <ImageView fitHeight="28.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../images/wuestion-type-one-correct-icon.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <Button maxHeight="-Infinity" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#convert" prefHeight="35.0" prefWidth="143.0" text="Convert">
+                    <graphic>
+                        <ImageView fitHeight="31.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../images/question-type-drag-drop-icon.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <Button maxHeight="-Infinity" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="35.0" text="Print">
+                    <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../images/Printer-orange-icon.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <Button maxHeight="-Infinity" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="35.0" text="Save">
+                    <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../images/Save-icon.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+            </children>
+        </VBox>
+        <VBox maxWidth="1.7976931348623157E308" prefHeight="29.0" prefWidth="765.0" spacing="8.0" GridPane.columnIndex="1" GridPane.columnSpan="2">
+            <children>
+                <HBox maxWidth="1.7976931348623157E308" prefHeight="29.0" prefWidth="762.0" spacing="8.0">
+                    <children>
+                        <MenuBar minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="760.0">
+                            <menus>
+                                <Menu mnemonicParsing="false" text="File">
+                                    <items>
+                                        <MenuItem mnemonicParsing="false" onAction="#save" text="Save..." />
+                                        <MenuItem mnemonicParsing="false" onAction="#open" text="Open..." />
+                                    </items>
+                                </Menu>
+                                <Menu mnemonicParsing="false" text="Edit">
+                                    <items>
+                                        <MenuItem mnemonicParsing="false" text="Delete" />
+                                    </items>
+                                </Menu>
+                                <Menu mnemonicParsing="false" text="Help">
+                                    <items>
+                                        <MenuItem mnemonicParsing="false" text="About" />
+                                    </items>
+                                </Menu>
+                            </menus>
+                            <opaqueInsets>
+                                <Insets />
+                            </opaqueInsets>
+                            <effect>
+                                <MotionBlur radius="0.75">
+                                    <input>
+                                        <DropShadow />
+                                    </input>
+                                </MotionBlur>
+                            </effect>
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                        </MenuBar>
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+        <AnchorPane fx:id="drawingAreaAnchorPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#DrawChapes" style="-fx-background-color: white;" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+    </children>
+    <padding>
+        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+    </padding>
 </GridPane>

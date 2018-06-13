@@ -44,7 +44,6 @@ public class AnchoreController {
     @FXML public  RadioButton arrowRadio;
     @FXML private RadioButton transitionRadio;
     @FXML private RadioButton placeRadio;
-
     public static  AnchorPane staticAnchorPane;
     private Transition T1;
     public static boolean arrowButton;
@@ -313,8 +312,8 @@ public class AnchoreController {
 
                System.out.println(petriNet.toString());
               // graph=new Graph();
-               staticAnchorPane.getChildren().clear();
-               //graph.paint(staticAnchorPane);
+               drawingAreaAnchorPane.getChildren().clear();
+               graph.paint(drawingAreaAnchorPane);
            }catch(IOException | ClassNotFoundException e){
                e.printStackTrace();
            }
@@ -422,7 +421,7 @@ public class AnchoreController {
                     for (Node n:root.getChildren()) {
                         zoomOperator.zoom(n, zoomFactor, event.getSceneX(), event.getSceneY());
                     }
-                    zoomOperator2.zoom(node, zoomFactor, event.getSceneX(), event.getSceneY());
+                      zoomOperator2.zoom(node, zoomFactor, event.getSceneX(), event.getSceneY());
 
                 }
             }
@@ -440,7 +439,6 @@ public class AnchoreController {
 // Listen to scroll events (similarly you could listen to a button click, slider, ...)
         scene.setOnScroll(new EventHandler<ScrollEvent>() {
             @Override
-
             public void handle(ScrollEvent event) {
                 if(event.isControlDown()){
                     double zoomFactor = 1.5;

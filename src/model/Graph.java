@@ -40,8 +40,6 @@ public  class Graph implements Serializable {
 
     public void paint(AnchorPane Anchorpane){
        // this.Anchorpane=Anchorpane;
-
-
         for (Place place:places){
             place.paint(Anchorpane);
         }
@@ -50,12 +48,9 @@ public  class Graph implements Serializable {
         }
 
         for (Arrow arrow:arrows) {
-
             arrow.paint(Anchorpane);
-
         }
     }
-
     public void refrech(){
         for (Arrow arrow:arrows) {
             arrow.relocate(AnchoreController.staticAnchorPane);
@@ -68,7 +63,6 @@ public  class Graph implements Serializable {
             transition.paint(pane);
         }
         */
-
     }
 
 
