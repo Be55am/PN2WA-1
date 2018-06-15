@@ -1,5 +1,6 @@
 package WAConvertion;
 
+import MCGGeneration.Place;
 import model.Event;
 
 public class Link {
@@ -47,8 +48,24 @@ public class Link {
         this.end = end;
     }
 
-    public String print(){
-        return "<Link: "+this.getStart().print()+"----"+this.getEnd().print()+" " +
-                "event : "+this.getEvent().getName()+" Energy : "+this.getEnergy()+" />\n";
+    public String print(Place unboundedPlace){
+        String result= "        <Link>\n" ;
+        result+="            <startNode id=\"([";
+        for (Place p:this.getStart().getPlaces()) {
+            if(!p.getName().equals(unboundedPlace.getName()))
+            result+=p.toString()+" ";
+        }
+        result+="], "+this.getStart().getEnergy()+")\"> </startNode>\n";
+
+        result+="            <endNode id= \"([";
+        for (Place p:this.getEnd().getPlaces()) {
+            if(!p.getName().equals(unboundedPlace.getName()))
+            result+=p.toString()+" ";
+        }
+        result+="], "+this.getEnd().getEnergy()+")\"> </endNode>\n";
+        result+="            <event>"+this.getEvent().getName()+"</event>\n";
+        result+="            <Energy>" +this.getEnergy()+"</Energy>\n";
+        result+="        </Link>\n";
+        return result;
     }
 }

@@ -155,7 +155,12 @@ public class PetriNet implements Serializable{
 
               }
           }
-          if(b)
+          boolean k=false;
+          for (int j = 0; j < pre.getPlaces().length; j++) {
+              if(pre.getValues()[j][i]!=0)
+                  k=true;
+          }
+          if(b&k)
           result.add(pre.getTransitions()[i]);
       }
       return result;

@@ -303,7 +303,26 @@ public class AnchoreController {
                 throw new NoUnboundedPlaceException();
             }else {
                 WeightedAutomata wa = converter.Convert(petriNet, unboundedPlace);
-                System.out.println(wa.print());
+                System.out.println(wa.print(unboundedPlace));
+                BufferedWriter writer=null;
+                try {
+                    File automateFile = new File("automate.xml");
+                    writer = new BufferedWriter(new FileWriter(automateFile));
+                    writer.write(wa.print(unboundedPlace));
+                    writer.flush();
+                    writer.close();
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } finally {
+                    try {
+                        if (writer != null)
+                            writer.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                drawAutomate();
             }
 
         }
@@ -498,6 +517,69 @@ public class AnchoreController {
             }
         });
 
+    }
+
+    public void drawAutomate(){
+        Stage stage=new Stage();
+        AutomateDrower.XMLReader reader=new AutomateDrower.XMLReader();
+        reader.PrintTreeMGC();
+        AutomateDrower.MyNode node = reader.getGraoh();
+
+        StackPane root = new StackPane();
+        root.getChildren().add(node);
+        ScrollPane sp = new ScrollPane(root);
+
+
+        AnimatedZoomOperator zoomOperator = new AnimatedZoomOperator();
+        AnimatedZoomOperator zoomOperator2 = new AnimatedZoomOperator();
+
+        sp.addEventFilter(ScrollEvent.SCROLL, new EventHandler<ScrollEvent>() {
+            @Override
+            public void handle(ScrollEvent event) {
+                if(event.isControlDown()){
+                    double zoomFactor = 1.5;
+                    if (event.getDeltaY() <= 0) {
+                        // zoom out
+                        zoomFactor = 1 / zoomFactor;
+                    }
+                    for (Node n:root.getChildren()) {
+                        zoomOperator.zoom(n, zoomFactor, event.getSceneX(), event.getSceneY());
+                    }
+                    zoomOperator2.zoom(node, zoomFactor, event.getSceneX(), event.getSceneY());
+
+                }
+            }
+        });
+
+        Scene scene = new Scene(sp);
+
+
+        stage.setScene(scene);
+        stage.show();
+        AnchorPane  linesHolder = reader.getLinesHolder(node);
+        root.getChildren().add(0, linesHolder);
+
+
+// Listen to scroll events (similarly you could listen to a button click, slider, ...)
+        scene.setOnScroll(new EventHandler<ScrollEvent>() {
+            @Override
+            public void handle(ScrollEvent event) {
+                if(event.isControlDown()){
+                    double zoomFactor = 1.5;
+                    if (event.getDeltaY() <= 0) {
+                        // zoom out
+                        zoomFactor = 1 / zoomFactor;
+                    }
+
+
+                    for (Node n:root.getChildren()) {
+                        zoomOperator.zoom(n, zoomFactor, event.getSceneX(), event.getSceneY());
+                    }
+                    zoomOperator2.zoom(node, zoomFactor, event.getSceneX(), event.getSceneY());
+
+                }
+            }
+        });
     }
 
 

@@ -101,6 +101,8 @@ public class Arrow implements Serializable{
             }
             startX+=15;
             startY+=10;
+            endX-=0;
+            endY-=0;
 
 
         }else {

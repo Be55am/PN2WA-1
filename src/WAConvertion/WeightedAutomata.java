@@ -155,16 +155,18 @@ public class WeightedAutomata {
     }
 
 
-    public String print(){
-        String result="<Automate:"+getName()+">\n";
+    public String print(Place unboundedPlace){
+        String result="<?xml version=\"1.0\"?>\n<AutomateWA>"+getName()+">\n";
 
+        result+="    <Nodes>\n";
         for (Node n:this.getNodeList()) {
-            result+=n.print()+"\n";
+            result+=n.print(unboundedPlace);
         }
+        result+="    </Nodes>\n"+"    <Links>\n";
         for (Link l:this.getLinkList()) {
-            result+=l.print();
+            result+=l.print(unboundedPlace);
         }
-        result+="</Automate>\n";
+        result+="    </Links>\n</AutomateWA>\n";
 
         return result;
     }

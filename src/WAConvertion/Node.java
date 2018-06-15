@@ -42,12 +42,14 @@ public class Node extends MCGGeneration.Node {
         this.safe = safe;
     }
 
-    public String print() {
-        String result = "<Node:" + this.getName() + " [";
+    public String print(Place unboundedPlace) {
+        //i changed the id to marking
+        String result = "        <Node id=\"([";
         for (Place p : getPlaces()) {
+            if(!p.getName().equals(unboundedPlace.getName()))
             result += p.toString() + " ";
         }
-        result +="energy:"+this.energy+ "new "+this.isNewTag()+"]>";
+        result +="], "+this.getEnergy()+")\">\n         </Node>\n";
 
         return result;
 
