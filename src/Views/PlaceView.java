@@ -30,7 +30,10 @@ public class PlaceView extends Group implements ShapeView,Serializable{
          DropShadow ds1 = new DropShadow();
          ds1.setOffsetY(2.0);
          circle.setStyle("-fx-stroke-line-cap: butt;-fx-stroke-dash-offset: 6;-fx-stroke-dash-array: 12 2 4 2; -fx-stroke: green;");
-         ds1.setColor(Color.WHEAT);
+    //   Add CSS Class to thr place
+        circle.getStyleClass().add("placeview");
+
+        ds1.setColor(Color.WHEAT);
          circle.setEffect(ds1);
          circle.setStroke(Color.web("#005599"));
          circle.setStrokeWidth(1);

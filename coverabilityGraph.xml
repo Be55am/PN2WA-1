@@ -2,28 +2,10 @@
 <Tree>
    <Nodes>
         <node>
-              <marking>[2 0 ]</marking>
-        </node>
-
-        <node>
-              <marking>[1 0 ]</marking>
-        </node>
-
-        <node>
-              <marking>[0 1 ]</marking>
+              <marking>[0 0 ]</marking>
         </node>
 
    </Nodes>
    <Links>
-       <link>
-           <firstNode>[2 0 ]</firstNode>
-           <secondNode>[1 0 ]</secondNode>
-           <transitions>{T1:a }</transitions>
-       </link>
-       <link>
-           <firstNode>[2 0 ]</firstNode>
-           <secondNode>[0 1 ]</secondNode>
-           <transitions>{T2:b }</transitions>
-       </link>
    </Links>
 </Tree>

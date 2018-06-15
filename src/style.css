@@ -39,31 +39,24 @@
     -fx-background-color: red;
 }
 .placeview {
-    -fx-background-color: #005599;
-    -fx-border-width: 2px;
-    -fx-background-color: green;
+    /*-fx-border-width: 2px;*/
+    /*-fx-background-color: green;*/
+}
+
+.placeview:hover {
+     -fx-effect: innershadow(gaussian , green, 15, 0, 0, 0);
+    -fx-cursor: OPEN_HAND;
+}
+.placeview:pressed {
+    -fx-effect: dropshadow(three-pass-box, purple, 10, 0, 0, 0);
+    -fx-cursor: CLOSED_HAND;
 }
 AnchorPane {
     -fx-background-color: #005599;
 }
 P1 {
     -fx-background-color: #005599;
-
 }
-
-/*.fieldlist input[type="radio"] {*/
-    /*-fx-float: right;*/
-    /*-webkit-appearance: none;*/
-    /*-fx-border: none;*/
-    /*-fx-width: 25px;*/
-    /*-fx-height: 25px;*/
-    /*-fx-background: url("images/radio.png") left center no-repeat;*/
-    /*background-size: 20px;*/
-/*}*/
-/*.fieldlist input[type="radio"]:checked {*/
-    /*background: url(images/radio_checked.png) left center no-repeat;*/
-
-/*}*/
 
 #transitionRadio:focused {
     -fx-focus-color: rgba(236, 12, 0, 0.49);
@@ -78,14 +71,12 @@ P1 {
 #arrowRadio , #placeRadio , #transitionRadio {
     -fx-focus-color: transparent;
 }
-
-
 #transitionRadio .dot , #arrowRadio .dot , #placeRadio .dot{
     -fx-focus-color: transparent;
     -fx-padding: 10px;
     -fx-background-color:transparent;
     -fx-background-insets: -10, -10;
-    -fx-background-image: url("/images/transition.png")  ;
+    -fx-background-image: url("/images/transition.png");
     -fx-background-position: left top, center;
     -fx-background-repeat: no-repeat;
     -fx-background-size: cover, auto;
@@ -96,11 +87,21 @@ P1 {
 #placeRadio .dot {
     -fx-background-image: url("/images/place-sm.png")  ;
 }
+
+#transitionRadio:selected {
+    -fx-effect: dropshadow(three-pass-box, red, 6, 0, 0, 0);
+}
+#arrowRadio:selected {
+    -fx-effect: dropshadow(three-pass-box, blue, 6, 0, 0, 0);
+
+}
+#placeRadio:selected
+{
+    -fx-effect: dropshadow(three-pass-box, green, 6, 0, 0, 0);
+}
 #transitionRadio:selected .dot,
 #arrowRadio:selected .dot,
 #placeRadio:selected .dot {
-    /*-fx-background-radius: 15px;*/
-
     -fx-padding: 10px;
     -fx-focus-color: transparent;
     /*-fx-background-color: #f48893;*/
