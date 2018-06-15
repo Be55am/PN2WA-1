@@ -21,7 +21,8 @@ public class TransitionView extends javafx.scene.Group implements ShapeView{
         rectangle.setArcHeight(15);
         rectangle.setArcWidth(15);
         rectangle.setStyle("-fx-stroke-line-cap: butt;-fx-stroke-dash-offset: 6;-fx-stroke-dash-array: 12 2 4 2; -fx-stroke: blue;");
-
+//add CSS Class to transition
+        rectangle.getStyleClass().add("transitioneview");
         text=new Text(position.getPositionX()+5,position.getPositionY()+35,name+":"+event);
         text.setTextAlignment(TextAlignment.CENTER);
         getChildren().addAll(rectangle,text);

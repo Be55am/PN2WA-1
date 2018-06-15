@@ -65,7 +65,7 @@ public class ArrowView extends Group{
         double x2 = (1.0 / 2.0 * cos + Math.sqrt(3) / 2 * sin) * arrowHeadSize + endX;
         double y2 = (1.0 / 2.0 * sin - Math.sqrt(3) / 2 * cos) * arrowHeadSize + endY;
 
-        path.getElements().add(new LineTo(x1, y1));
+         path.getElements().add(new LineTo(x1, y1));
          path.getElements().add(new LineTo(x2, y2));
          path.getElements().add(new LineTo(endX, endY));
          this.getChildren().add(path);

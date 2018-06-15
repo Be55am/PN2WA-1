@@ -43,12 +43,26 @@
     /*-fx-background-color: green;*/
 }
 
-.placeview:hover {
-     -fx-effect: innershadow(gaussian , green, 15, 0, 0, 0);
+.placeview:hover ,.transitioneview:hover {
+    -fx-effect: innershadow(gaussian , darkgreen, 15, 0, 0, 0);
     -fx-cursor: OPEN_HAND;
 }
-.placeview:pressed {
-    -fx-effect: dropshadow(three-pass-box, purple, 10, 0, 0, 0);
+.transitioneview:hover {
+    -fx-effect: innershadow(gaussian , blue, 8, 0, 0, 0);
+}
+.placeview:pressed  ,.transitioneview:pressed {
+    -fx-effect: dropshadow(three-pass-box, darkgreen, 10, 0, 0, 0);
+    -fx-cursor: CLOSED_HAND;
+}
+.transitioneview:pressed {
+    -fx-effect: dropshadow(three-pass-box, darkblue, 10, 0, 0, 0);
+}
+arrowview:hover{
+    -fx-effect: dropshadow(three-pass-box, red, 10, 0, 0, 0);
+    -fx-cursor: OPEN_HAND;
+}
+arrowview:pressed{
+    -fx-effect: dropshadow(three-pass-box, darkred, 10, 0, 0, 0);
     -fx-cursor: CLOSED_HAND;
 }
 AnchorPane {
