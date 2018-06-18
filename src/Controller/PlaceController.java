@@ -24,19 +24,20 @@ public class PlaceController {
         this.view = place.getView();
 //      here you can adjust the place of the dragg with the scene
         view.setOnMouseDragged(event -> {
-            double x = event.getSceneX()-210 ;
-            double y = event.getSceneY()-90;
+            double x = event.getSceneX() ;
+            double y = event.getSceneY();
+            System.out.println("X"+ x +"\n Y"+y);
             if (x < 0){
-                x= AnchoreController.staticAnchorPane.getLayoutX()-180;
+                x= AnchoreController.staticAnchorPane.getLayoutX();
             }
 
             if (y < 0) {
-                y = AnchoreController.staticAnchorPane.getLayoutY() - 60;
+                y = AnchoreController.staticAnchorPane.getLayoutY();
             }
             view.relocate(x, y);
             Position p = place.getPosition();
-            p.setPositionX(x+30);
-            p.setPositionY(y+30);
+            p.setPositionX(x);
+            p.setPositionY(y);
             place.setPosition(p);
         });
         // for the right click menu
