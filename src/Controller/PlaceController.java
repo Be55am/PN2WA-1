@@ -30,7 +30,6 @@ public class PlaceController {
             if (x < 0){
                 x= AnchoreController.staticAnchorPane.getLayoutX();
             }
-
             if (y < 0) {
                 y = AnchoreController.staticAnchorPane.getLayoutY();
             }
@@ -77,12 +76,6 @@ public class PlaceController {
         AnchoreController.staticAnchorPane.getChildren().clear();
         AnchoreController.graph.paint(AnchoreController.staticAnchorPane);
 
-
-
-
-
-
-
     }
     public void setMarking(){
         TextInputDialog dialog=new TextInputDialog();
@@ -92,7 +85,17 @@ public class PlaceController {
         Optional<String> result=dialog.showAndWait();
 
         if(result.isPresent()){
-           int marking=Integer.valueOf(result.get());
+            int marking=0;
+            boolean parse=false;
+           if ( !result.get().contains("[a-zA-Z]+") && result.get().length() >0  ){
+               try {
+                   marking=Integer.valueOf(result.get());
+                   parse=true;
+               }catch (NumberFormatException e){
+                   parse = false;
+               }
+           }
+            if (parse){
            //AnchoreController.graph.deleteShape(place);
              place.setMarking(marking);
              place.refrech();
@@ -100,8 +103,20 @@ public class PlaceController {
             //place.getView().setText(new Text(place.getName()));
 
             AnchoreController.staticAnchorPane.getChildren().clear();
-            AnchoreController.graph.paint(AnchoreController.staticAnchorPane);
+            AnchoreController.graph.paint(AnchoreController.staticAnchorPane);}
+            else {
+            //todo
+            AlertBox("Error Parsing","Please enter Integer Number!.","Warning");
+            }
         }
+    }
+
+    private void AlertBox(String Header, String Content , String Type) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle(Type);
+        alert.setHeaderText(Header);
+        alert.setContentText(Content);
+        alert.showAndWait();
     }
     public void delete(){
         Alert alert=new Alert(Alert.AlertType.CONFIRMATION);

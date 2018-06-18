@@ -177,27 +177,23 @@ public class AnchoreController {
         dialog.setTitle("Set Event");
         dialog.setHeaderText("Enter event for this transition");
         dialog.setContentText("Please enter event name :");
-
         Optional<String>result=dialog.showAndWait();
+        String text=result.get();
         if(result.isPresent()){
-            //   Place shape1=new Place(new Position(ev.getX(),ev.getY()),"p"+count);
-            countTransition++;
-            //        T1 =new Transition(new Position(ev.getX(),ev.getY()),"T"+count);
-            drawingAreaAnchorPane.getChildren().clear();
-            Transition transition =new Transition(new Position(ev.getX(), ev.getY()), "T" + countTransition,result.get());
-            transition.getTrasitionView().setId("T"+countTransition);
-            //    transition.getTrasitionView().getStyleClass().add("arrowspace");
-//
-//                      "  border:solid 5px #000;" +
-//                      "  border-color:#000 transparent transparent transparent;" +
-//                      "  border-radius: 50%/100px 100px 0 0;" +
-//                      "");
-            graph.addTransition(transition);
-            graph.paint(drawingAreaAnchorPane);
+            if (text.matches("[0-9]+") && !text.contains("[0-9]+") && text.length() > 0) {
+                //   Place shape1=new Place(new Position(ev.getX(),ev.getY()),"p"+count);
+                countTransition++;
+                //        T1 =new Transition(new Position(ev.getX(),ev.getY()),"T"+count);
+                drawingAreaAnchorPane.getChildren().clear();
+                Transition transition =new Transition(new Position(ev.getX(), ev.getY()), "T" + countTransition,result.get());
+                transition.getTrasitionView().setId("T"+countTransition);
+
+                graph.addTransition(transition);
+                graph.paint(drawingAreaAnchorPane);
+            }else {
+                AlertBox("Error parse","Enter String not Containt  a Number","Text Format Error");
+            }
         }
-
-
-
     }
 
     private void AlertBox(String Header, String Content , String Type) {

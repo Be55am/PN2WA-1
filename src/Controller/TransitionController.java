@@ -119,11 +119,25 @@ public class TransitionController {
         if(result.isPresent()){
 
             //AnchoreController.graph.deleteShape(place);
-            transition.setEvent(result.get());
-            transition.refrech();
+            String text=result.get();
 
-            AnchoreController.staticAnchorPane.getChildren().clear();
-            AnchoreController.graph.paint(AnchoreController.staticAnchorPane);
+            if (text.matches("[0-9]+") == false  && text.length() >= 0) {
+                transition.setEvent(result.get());
+                transition.refrech();
+                System.out.println("M"+ text.matches("[0-9]+"));
+                AnchoreController.staticAnchorPane.getChildren().clear();
+                AnchoreController.graph.paint(AnchoreController.staticAnchorPane);
+            }else {
+                AlertBox("Error parse","Enter String not Containt  a Number","Text Format Error");
+            }
         }
     }
+    private void AlertBox(String Header, String Content , String Type) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle(Type);
+        alert.setHeaderText(Header);
+        alert.setContentText(Content);
+        alert.showAndWait();
+    }
+
 }
