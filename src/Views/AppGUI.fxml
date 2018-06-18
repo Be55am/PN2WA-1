@@ -41,6 +41,15 @@
         <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="485.0" vgrow="SOMETIMES" />
     </rowConstraints>
     <children>
+      <ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="482.0" prefWidth="607.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+         <content>
+            <StackPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="479.0" prefWidth="592.0">
+               <children>
+                    <AnchorPane fx:id="drawingAreaAnchorPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#DrawChapes" prefHeight="467.0" prefWidth="604.0" style="-fx-background-color: white;" />
+               </children>
+            </StackPane>
+         </content>
+      </ScrollPane>
         <VBox maxHeight="1.7976931348623157E308" maxWidth="-Infinity" prefHeight="417.0" prefWidth="143.0" spacing="15.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
             <children>
                 <TitledPane maxWidth="1.7976931348623157E308" text="Drawing Shapes">
@@ -169,7 +178,6 @@
                 </HBox>
             </children>
         </VBox>
-        <AnchorPane fx:id="drawingAreaAnchorPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#DrawChapes" style="-fx-background-color: white;" GridPane.columnIndex="2" GridPane.rowIndex="1" />
     </children>
     <padding>
         <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
