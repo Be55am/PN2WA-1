@@ -14,6 +14,7 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
+import javafx.print.PrinterJob;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -322,7 +323,7 @@ public class AnchoreController {
                         e.printStackTrace();
                     }
                 }
-                drawAutomate();
+                drawAutomate(wa,unboundedPlace);
             }
 
         }
@@ -488,7 +489,7 @@ public class AnchoreController {
         });
 
         Scene scene = new Scene(sp);
-        new CoverabilityGraphController(scene,graph);
+        new CoverabilityGraphController(scene,graph,null,null);
 
         stage.setScene(scene);
         stage.show();
@@ -519,7 +520,7 @@ public class AnchoreController {
 
     }
 
-    public void drawAutomate(){
+    public void drawAutomate(WeightedAutomata wa, MCGGeneration.Place unboundedP){
         Stage stage=new Stage();
         AutomateDrower.XMLReader reader=new AutomateDrower.XMLReader();
         reader.PrintTreeMGC();
@@ -552,7 +553,7 @@ public class AnchoreController {
         });
 
         Scene scene = new Scene(sp);
-
+        new CoverabilityGraphController(scene,null,wa,unboundedP);
 
         stage.setScene(scene);
         stage.show();
@@ -581,6 +582,48 @@ public class AnchoreController {
             }
         });
     }
+    @FXML
 
+        private void print() {
+
+        System.out.println("printing...");
+            // Define the Job Status Message
+
+            // Create a printer job for the default printer
+
+            PrinterJob job = PrinterJob.createPrinterJob();
+            if (job != null) {
+                // Show the printer job status
+
+
+                // Print the node
+                boolean printed = job.printPage(staticAnchorPane);
+                if (printed) {
+
+                    // End the printer job
+
+                    job.endJob();
+
+                }
+
+            else
+
+                {
+
+                    // Write Error Message
+                    System.out.println("Printing error !");
+
+                }
+
+            }
+
+        else {
+
+                // Write Error Message
+
+                System.out.println("Could not create a printer job.");
+
+            }
+    }
 
 }

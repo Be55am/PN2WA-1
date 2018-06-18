@@ -40,7 +40,7 @@ public class XMLReader {
             return null;
         }
 
-        rootNode = new MyNode("marking Tree");
+        rootNode = new MyNode("Weighted Automata");
         while (!nodeList.filtered(n -> !n.isUsed()).isEmpty()) {
             MyNode node = nodeList.filtered(n -> !n.isUsed()).get(0);
             node.setUsed(true);

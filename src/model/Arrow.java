@@ -29,16 +29,54 @@ public class Arrow implements Serializable{
         double endX=end.getPositionX();
         double endY=end.getPositionY();
         if(endingShape instanceof Place){
-            if((startX-endX)<0)
-                endX=endX-15;
-            else endX=endX+15;
+            if((startX-endX)<0) {
+                endX = endX - 17;
+                startX=startX+18;
+            }
+            else {
+                endX=endX+15;
+                startX-=13;
+            }
 
-            if((startY-endY)<0)
+            if((startY-endY)<0) {
                 endY=endY-10;
-            else endY=endY+10;
-            startX+=10;
-            startY+=10;
+                startY=startY+6;
+            }
+            else {
+                endY=endY+10;
+                startY=startY-5;
+            }
+            startX+=20;
+            startY+=15;
+            endX+=2;
+            endY+=2;
+
+
+        }else {
+            if((startX-endX)<0) {
+                endX = endX - 13;
+                startX=startX+8;
+            }
+            else {
+                endX=endX+15;
+                startX-=18;
+            }
+
+            if((startY-endY)<0) {
+                endY=endY-10;
+                startY=startY+13;
+            }
+            else {
+                endY=endY+10;
+                startY=startY-15;
+            }
+            endX+=23;
+            endY+=18;
+
+
         }
+
+
 
         this.arrowView=new ArrowView(startX,startY,endX,endY,weight);
         controller=new ArrowController(this);
@@ -99,10 +137,10 @@ public class Arrow implements Serializable{
                 endY=endY+10;
                 startY=startY-5;
             }
-            startX+=15;
-            startY+=10;
-            endX-=0;
-            endY-=0;
+            startX+=20;
+            startY+=15;
+            endX+=2;
+            endY+=2;
 
 
         }else {
@@ -123,8 +161,8 @@ public class Arrow implements Serializable{
                 endY=endY+10;
                 startY=startY-15;
             }
-            endX+=15;
-            endY+=10;
+            endX+=23;
+            endY+=18;
 
 
         }

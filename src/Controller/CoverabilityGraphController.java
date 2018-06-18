@@ -1,6 +1,8 @@
 package Controller;
 
 import MCGGeneration.MCG;
+import MCGGeneration.Place;
+import WAConvertion.WeightedAutomata;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -22,10 +24,14 @@ import java.io.IOException;
 public class CoverabilityGraphController {
     private Scene view;
     MCG graph;
+    WeightedAutomata wa;
+    Place p;
 
-    public CoverabilityGraphController(Scene pane,MCG graph){
+    public CoverabilityGraphController(Scene pane, MCG graph, WeightedAutomata wa, Place p){
         this.view=pane;
         this.graph=graph;
+        this.wa=wa;
+        this.p=p;
 
 
         view.setOnMouseClicked(event -> {
@@ -33,7 +39,7 @@ public class CoverabilityGraphController {
                 //creating a ContextMenu
                 ContextMenu contextMenu=new ContextMenu();
                 MenuItem save=new MenuItem("Save...");
-                MenuItem saveAs=new MenuItem("Save As...");
+                MenuItem saveAs=new MenuItem("Save As png...");
 
                 contextMenu.getItems().addAll(save,saveAs,new SeparatorMenuItem());
                 contextMenu.show(view.getWindow(),event.getScreenX(),event.getScreenY());
@@ -54,10 +60,15 @@ public class CoverabilityGraphController {
         if(selected != null) {
             pathname = selected.getAbsolutePath();
             System.out.println("saving file to " + pathname);
-            file = new File(pathname);
+            file = new File(pathname+".xml");
             System.out.println(file.getAbsolutePath());
-            System.out.print("saving Coverability Graph ...");
-            String text=graph.toString();
+            System.out.print("saving Graph ...");
+            String text;
+            if (wa==null)
+                text=graph.toString();
+            else{
+                text=wa.print(p);
+            }
 
             BufferedWriter writer = null;
             try {
@@ -92,7 +103,7 @@ public class CoverabilityGraphController {
         if(selected!=null) {
             WritableImage wim = new WritableImage((int) view.getWidth(), (int) view.getHeight());
             pathname=selected.getAbsolutePath();
-           file=new File(pathname);
+           file=new File(pathname+".png");
 
             view.snapshot(wim);
 

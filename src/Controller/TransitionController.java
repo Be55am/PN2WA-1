@@ -29,7 +29,7 @@ public class TransitionController {
                 y = AnchoreController.staticAnchorPane.getLayoutY() - 50;
             }
 
-            view.relocate(x,y);
+            view.relocate(x-3,y-3);
 
             Position p=transition.getPosition();
             p.setPositionX(x);

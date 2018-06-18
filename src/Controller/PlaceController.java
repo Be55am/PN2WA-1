@@ -24,8 +24,8 @@ public class PlaceController {
         this.view = place.getView();
 //      here you can adjust the place of the dragg with the scene
         view.setOnMouseDragged(event -> {
-            double x = event.getSceneX() ;
-            double y = event.getSceneY();
+            double x = event.getSceneX()-200 ;
+            double y = event.getSceneY()-75;
             System.out.println("X"+ x +"\n Y"+y);
             if (x < 0){
                 x= AnchoreController.staticAnchorPane.getLayoutX();
