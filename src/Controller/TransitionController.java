@@ -106,7 +106,6 @@ public class TransitionController {
             AnchoreController.graph.paint(AnchoreController.staticAnchorPane);
 
         }
-
     }
 
     private void setEvent(){
@@ -115,12 +114,8 @@ public class TransitionController {
         dialog.setContentText("enter your Event : ");
         //todo there is an exception should be captured , the case of the marking is not a String
         Optional<String> result=dialog.showAndWait();
-
         if(result.isPresent()){
-
-            //AnchoreController.graph.deleteShape(place);
             String text=result.get();
-
             if (text.matches("[0-9]+") == false  && text.length() >= 0) {
                 transition.setEvent(result.get());
                 transition.refrech();
@@ -132,6 +127,7 @@ public class TransitionController {
             }
         }
     }
+
     private void AlertBox(String Header, String Content , String Type) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle(Type);

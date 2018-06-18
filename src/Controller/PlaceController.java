@@ -96,17 +96,14 @@ public class PlaceController {
                }
            }
             if (parse){
-           //AnchoreController.graph.deleteShape(place);
              place.setMarking(marking);
              place.refrech();
-           // AnchoreController.graph.addPlace(place);
-            //place.getView().setText(new Text(place.getName()));
 
             AnchoreController.staticAnchorPane.getChildren().clear();
             AnchoreController.graph.paint(AnchoreController.staticAnchorPane);}
             else {
-            //todo
-            AlertBox("Error Parsing","Please enter Integer Number!.","Warning");
+
+               AlertBox("Error Parsing","Please enter Integer Number!.","Warning");
             }
         }
     }

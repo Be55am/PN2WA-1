@@ -160,8 +160,7 @@ Scroll Pane Style
     -fx-background-color: white;
     -fx-background-radius: 5em;
 }
-
 .scroll-pane > .corner {
-    -fx-background-color: rgba(0, 0, 0, 0.42);
 
+    -fx-background-color: rgba(0, 0, 0, 0.42);
 }
