@@ -1,7 +1,6 @@
 package Controller;
 
 import Main.Main;
-import com.khaledsab.jfxpopup.MainApp;
 
 public abstract class AbstractController {
 
