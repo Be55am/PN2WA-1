@@ -20,7 +20,7 @@ public class TransitionController {
         this.view=transition.getTrasitionView();
 
         view.setOnMouseDragged(event ->{
-            double x = event.getSceneX()-190 ;
+            double x = event.getSceneX()-190;
             double y = event.getSceneY()-60;
             if (x < 0){
                 x= AnchoreController.staticAnchorPane.getLayoutX()-175;
@@ -116,14 +116,15 @@ public class TransitionController {
         Optional<String> result=dialog.showAndWait();
         if(result.isPresent()){
             String text=result.get();
-            if (text.matches("[0-9]+") == false  && text.length() >= 0) {
+            if (!text.matches("[0-9]+") && !result.get().contains("[0-9]+")    && text.length() > 0) {
                 transition.setEvent(result.get());
                 transition.refrech();
-                System.out.println("M"+ text.matches("[0-9]+"));
+               // System.out.println("M"+ text.matches("[0-9]+"));
                 AnchoreController.staticAnchorPane.getChildren().clear();
                 AnchoreController.graph.paint(AnchoreController.staticAnchorPane);
             }else {
-                AlertBox("Error parse","Enter String not Containt  a Number","Text Format Error");
+                AlertBox("Error parsing...","Enter String not Contain a Number",
+                        "Text Format Error");
             }
         }
     }

@@ -10,12 +10,15 @@ import Views.TransitionView;
 import WAConvertion.Converter;
 import WAConvertion.WeightedAutomata;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.print.PrinterJob;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -27,6 +30,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 import model.*;
@@ -38,14 +42,18 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Optional;
 
-public class AnchoreController {
+public class AnchoreController extends AbstractController {
+
     // @FXML public Label source;
     @FXML private  AnchorPane drawingAreaAnchorPane;
     @FXML private ToggleGroup ChapeToggleGroup;
     @FXML public  RadioButton arrowRadio;
     @FXML private RadioButton transitionRadio;
     @FXML private RadioButton placeRadio;
+    @FXML private MenuItem btnAbout;
+
     public static  AnchorPane staticAnchorPane;
+
     private Transition T1;
     public static boolean arrowButton;
     private int countTransition, countPlace , countArrow;
@@ -180,7 +188,7 @@ public class AnchoreController {
         Optional<String>result=dialog.showAndWait();
         String text=result.get();
         if(result.isPresent()){
-            if (text.matches("[0-9]+") && !text.contains("[0-9]+") && text.length() > 0) {
+            if (!text.matches("[0-9]+") && !text.contains("[0-9]+") && text.length() > 0) {
                 //   Place shape1=new Place(new Position(ev.getX(),ev.getY()),"p"+count);
                 countTransition++;
                 //        T1 =new Transition(new Position(ev.getX(),ev.getY()),"T"+count);
@@ -622,4 +630,33 @@ public class AnchoreController {
             }
     }
 
+    @FXML
+    void aboutPopUP(ActionEvent event) {
+
+
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("../Views/Popup.fxml"));
+        // initializing the controller
+        PopupController popupController = new PopupController();
+        loader.setController(popupController);
+        Parent layout;
+        try {
+            layout = loader.load();
+            Scene scene = new Scene(layout);
+            // this is the popup stage
+            Stage popupStage = new Stage();
+            // now
+            popupController.setStage(popupStage);
+            if(this.main!=null) {
+                popupStage.initOwner(main.getPrimaryStage());
+            }
+            popupStage.initModality(Modality.WINDOW_MODAL);
+            popupStage.setTitle("About");
+            popupStage.setScene(scene);
+            popupStage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "There was an error trying to load the popup fxml file.").show();
+        }
+    }
 }

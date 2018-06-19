@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.Cursor?>
@@ -21,10 +29,10 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.StackPane?>
-<GridPane hgap="8.0" prefHeight="541.0" prefWidth="785.0" vgap="8.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.AnchoreController">
+
+<GridPane hgap="8.0" prefHeight="541.0" prefWidth="785.0" vgap="8.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
     <columnConstraints>
         <ColumnConstraints />
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="148.0" minWidth="126.0" prefWidth="148.0" />
@@ -74,7 +82,7 @@
                 </TitledPane>
                 <Button fx:id="undoBtn" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="35.0" text="Undo" textFill="#005599">
                     <graphic>
-                        <ImageView fitHeight="20.0" fitWidth="37.0">
+                        <ImageView fitHeight="20.0" fitWidth="37.0" style="-: 10;" styleClass="btns">
                             <image>
                                 <Image url="@../images/undo.png" />
                             </image>
@@ -83,6 +91,10 @@
                             </viewport>
                         </ImageView>
                     </graphic>
+               <styleClass>
+                  <String fx:value="btn" />
+                  <String fx:value="btn-glass" />
+               </styleClass>
                 </Button>
                 <Button fx:id="clearBtn" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#HandleClearArea" prefHeight="35.0" prefWidth="143.0" text="Clear" textFill="#e50000" textOverrun="CLIP">
                     <graphic>
@@ -150,7 +162,7 @@
                                 </Menu>
                                 <Menu mnemonicParsing="false" text="Help">
                                     <items>
-                                        <MenuItem mnemonicParsing="false" text="About" />
+                                        <MenuItem fx:id="btnAbout" mnemonicParsing="false" onAction="#aboutPopUP" text="About" />
                                     </items>
                                 </Menu>
                             </menus>
