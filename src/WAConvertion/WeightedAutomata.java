@@ -77,6 +77,11 @@ public class WeightedAutomata {
         for (Integer in:val) {
             System.out.println(in);
         }
+        if(val.size()==0){
+            Interval only=new Interval(0,999999999);
+            res.add(only);
+            return res;
+        }
         Interval interval0 =new Interval(0,val.get(0)-1);
 
         res.add(interval0);

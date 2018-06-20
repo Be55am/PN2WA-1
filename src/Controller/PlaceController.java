@@ -26,7 +26,7 @@ public class PlaceController {
         view.setOnMouseDragged(event -> {
             double x = event.getSceneX()-200 ;
             double y = event.getSceneY()-75;
-            System.out.println("X"+ x +"\n Y"+y);
+           // System.out.println("X"+ x +"\n Y"+y);
             if (x < 0){
                 x= AnchoreController.staticAnchorPane.getLayoutX();
             }

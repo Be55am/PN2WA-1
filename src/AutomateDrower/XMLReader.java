@@ -45,7 +45,7 @@ public class XMLReader {
             MyNode node = nodeList.filtered(n -> !n.isUsed()).get(0);
             node.setUsed(true);
             node.addTransitions(transitonList, nodeList);
-            System.out.println("Moot :-"+node.getMark()+"-");
+            System.out.println("Root :-"+node.getMark()+"-");
             rootNode.addNode(node);
         }
         // search for the transition that have a child that does not exist in nodelist

@@ -177,11 +177,14 @@ public class PetriNet implements Serializable{
         for (Transition t:enabledTransitions) {
             model.Event e=t.getEvent();
             if(result.size()>0) {
+                boolean b=true;
                 for (int i = 0; i < result.size(); i++) {
-                    if (!result.get(i).getName().equals(e.getName())) {
-                        result.add(e);
+                    if (result.get(i).getName().equals(e.getName())) {
+                        b=false;
                     }
                 }
+                if(b)
+                result.add(e);
             }else {
                 result.add(e);
             }

@@ -534,7 +534,6 @@ public class AnchoreController extends AbstractController {
         root.getChildren().add(node);
         ScrollPane sp = new ScrollPane(root);
 
-
         AnimatedZoomOperator zoomOperator = new AnimatedZoomOperator();
         AnimatedZoomOperator zoomOperator2 = new AnimatedZoomOperator();
 

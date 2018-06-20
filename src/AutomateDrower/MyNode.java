@@ -23,13 +23,6 @@ public class MyNode extends VBox {
     private boolean used;
     ObservableList<Transition> transitionList = FXCollections.observableArrayList();
     //String markWA;
-    public boolean isUsed() {
-        return used;
-    }
-
-    public void setUsed(boolean used) {
-        this.used = used;
-    }
 
     public MyNode(String mark) {
         this.mark = mark;
@@ -161,6 +154,12 @@ public class MyNode extends VBox {
 
     public Label getMarkLabel() {
         return markLabel;
+    }
+    public boolean isUsed() {
+        return used;
+    }
+    public void setUsed(boolean used) {
+        this.used = used;
     }
 
 }

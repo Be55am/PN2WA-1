@@ -102,4 +102,8 @@ public class MCG {
         return null;
     }
 
+    public boolean remove(Node n){
+        return nodes.remove(n);
+    }
+
 }

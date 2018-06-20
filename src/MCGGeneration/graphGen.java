@@ -30,7 +30,12 @@ public class graphGen {
             //2.1
             Node q=graph.getNewNode();
             //2.2
+            ArrayList<Event> sdf=net.getEnabledEvents(q);
+            for (Event e:sdf) {
+               System.out.println(e.getName());
+            }
             for (Event e:net.getEnabledEvents(q)) {
+
                 //2.2.1
                 String event=e.getName();
                 generatedNodes=net.generateNextMarking(q,e);
@@ -41,6 +46,7 @@ public class graphGen {
                 //2.2.2
                 for (Node qPrim:generatedNodes) {
                     //2.2.2.1
+                    Connection c1=null;
                     if(q.containsWMarking()&!qPrim.containsWMarking()){
                         Place wp=q.getWPlace();
                         ArrayList<Transition> enabledTransitionsTemp=new ArrayList<>(enabledTransitions);
@@ -49,17 +55,17 @@ public class graphGen {
                         Connection c=new Connection(q,qPrim,enabledTransitionsTemp);
                         graph.addConnection(c);
                     }else{
-                        Connection c;
+
                         if(q.isEqual(qPrim)){
-                            c=new Connection(q,q,enabledTransitions);
+                            c1=new Connection(q,q,enabledTransitions);
                         }else if(graph.contain(qPrim)!=null){
-                            c=new Connection(q,graph.contain(qPrim),enabledTransitions);
+                            c1=new Connection(q,graph.contain(qPrim),enabledTransitions);
                         }
                         else {
-                            c= new Connection(q, qPrim, enabledTransitions);
+                            c1= new Connection(q, qPrim, enabledTransitions);
 
                         }
-                        graph.addConnection(c);
+                        graph.addConnection(c1);
 
 
                     }
@@ -81,7 +87,20 @@ public class graphGen {
                                                 int r = ((IntMarking) qPrim.getPlaces()[i].getMarking()).getValue() % k;
                                                 int n = ((IntMarking) qPrim.getPlaces()[i].getMarking()).getValue() / k;
                                                 WMarking wm = new WMarking(k, r, n);
+                                                //in case the new Wmarking is already exists
+
+
                                                 qPrim.getPlaces()[i].setM(wm);
+                                                graph.remove(qPrim);
+                                                if(graph.contain(qPrim)!=null){
+                                                    c1.setEnd(graph.contain(qPrim));
+                                                }else{
+                                                    graph.addNode(qPrim);
+                                                    qPrim.getPlaces()[i].setM(wm);
+                                                }
+
+
+
 
                                                 if(unboundedPlaces.size()==0){
                                                     unboundedPlaces.add(qPrim.getWPlace());
