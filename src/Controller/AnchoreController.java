@@ -1,5 +1,6 @@
 package Controller;
 //package Controller;
+import AutomateDrower.Model.MyReader;
 import CoverabilityGraphViewer.AnimatedZoomOperator;
 import CoverabilityGraphViewer.MyNode;
 import CoverabilityGraphViewer.XMLReader;
@@ -526,12 +527,12 @@ public class AnchoreController extends AbstractController {
 
     public void drawAutomate(WeightedAutomata wa, MCGGeneration.Place unboundedP){
         Stage stage=new Stage();
-        AutomateDrower.XMLReader reader=new AutomateDrower.XMLReader();
-        reader.PrintTreeMGC();
-        AutomateDrower.MyNode node = reader.getGraoh();
+        MyReader reader=new MyReader();
+        AutomateDrower.Model.Graph graph=reader.PrintTreeMGC();
 
-        StackPane root = new StackPane();
-        root.getChildren().add(node);
+
+        AnchorPane root=new AnchorPane();
+        graph.paint(root);
         ScrollPane sp = new ScrollPane(root);
 
         AnimatedZoomOperator zoomOperator = new AnimatedZoomOperator();
@@ -549,7 +550,7 @@ public class AnchoreController extends AbstractController {
                     for (Node n:root.getChildren()) {
                         zoomOperator.zoom(n, zoomFactor, event.getSceneX(), event.getSceneY());
                     }
-                    zoomOperator2.zoom(node, zoomFactor, event.getSceneX(), event.getSceneY());
+
 
                 }
             }
@@ -560,8 +561,8 @@ public class AnchoreController extends AbstractController {
 
         stage.setScene(scene);
         stage.show();
-        AnchorPane  linesHolder = reader.getLinesHolder(node);
-        root.getChildren().add(0, linesHolder);
+
+
 
 
 // Listen to scroll events (similarly you could listen to a button click, slider, ...)
@@ -579,7 +580,7 @@ public class AnchoreController extends AbstractController {
                     for (Node n:root.getChildren()) {
                         zoomOperator.zoom(n, zoomFactor, event.getSceneX(), event.getSceneY());
                     }
-                    zoomOperator2.zoom(node, zoomFactor, event.getSceneX(), event.getSceneY());
+
 
                 }
             }

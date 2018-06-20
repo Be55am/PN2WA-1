@@ -2,258 +2,33 @@
 <Tree>
    <Nodes>
         <node>
-              <marking>[1 0 1 0 ]</marking>
+              <marking>[3 0 ]</marking>
         </node>
 
         <node>
-              <marking>[0 1 1 0 ]</marking>
+              <marking>[3 1 ]</marking>
         </node>
 
         <node>
-              <marking>[1 0 1 3 ]</marking>
-        </node>
-
-        <node>
-              <marking>[0 1 1 3 ]</marking>
-        </node>
-
-        <node>
-              <marking>[0 1 1 1 ]</marking>
-        </node>
-
-        <node>
-              <marking>[1 0 1 3W2+0 ]</marking>
-        </node>
-
-        <node>
-              <marking>[1 0 1 1 ]</marking>
-        </node>
-
-        <node>
-              <marking>[0 1 1 3W2+0 ]</marking>
-        </node>
-
-        <node>
-              <marking>[0 1 1 4 ]</marking>
-        </node>
-
-        <node>
-              <marking>[0 1 1 3W1+1 ]</marking>
-        </node>
-
-        <node>
-              <marking>[1 0 1 4 ]</marking>
-        </node>
-
-        <node>
-              <marking>[1 0 1 3W1+1 ]</marking>
-        </node>
-
-        <node>
-              <marking>[1 0 1 2 ]</marking>
-        </node>
-
-        <node>
-              <marking>[1 0 1 3W0+2 ]</marking>
-        </node>
-
-        <node>
-              <marking>[0 1 1 2 ]</marking>
-        </node>
-
-        <node>
-              <marking>[0 1 1 3W0+2 ]</marking>
-        </node>
-
-        <node>
-              <marking>[1 0 1 5 ]</marking>
-        </node>
-
-        <node>
-              <marking>[0 1 1 5 ]</marking>
+              <marking>[3 1W2+0 ]</marking>
         </node>
 
    </Nodes>
    <Links>
        <link>
-           <firstNode>[1 0 1 0 ]</firstNode>
-           <secondNode>[0 1 1 0 ]</secondNode>
+           <firstNode>[3 0 ]</firstNode>
+           <secondNode>[3 1 ]</secondNode>
            <transitions>{T1:a }</transitions>
        </link>
        <link>
-           <firstNode>[1 0 1 0 ]</firstNode>
-           <secondNode>[1 0 1 3 ]</secondNode>
-           <transitions>{T3:b }</transitions>
-       </link>
-       <link>
-           <firstNode>[0 1 1 0 ]</firstNode>
-           <secondNode>[1 0 1 0 ]</secondNode>
-           <transitions>{T2:a }</transitions>
-       </link>
-       <link>
-           <firstNode>[0 1 1 0 ]</firstNode>
-           <secondNode>[0 1 1 3 ]</secondNode>
-           <transitions>{T3:b }</transitions>
-       </link>
-       <link>
-           <firstNode>[1 0 1 3 ]</firstNode>
-           <secondNode>[0 1 1 1 ]</secondNode>
-           <transitions>{T1:a T4:a }</transitions>
-       </link>
-       <link>
-           <firstNode>[1 0 1 3 ]</firstNode>
-           <secondNode>[1 0 1 3W2+0 ]</secondNode>
-           <transitions>{T3:b }</transitions>
-       </link>
-       <link>
-           <firstNode>[0 1 1 3 ]</firstNode>
-           <secondNode>[1 0 1 1 ]</secondNode>
-           <transitions>{T2:a T4:a }</transitions>
-       </link>
-       <link>
-           <firstNode>[0 1 1 3 ]</firstNode>
-           <secondNode>[0 1 1 3W2+0 ]</secondNode>
-           <transitions>{T3:b }</transitions>
-       </link>
-       <link>
-           <firstNode>[0 1 1 1 ]</firstNode>
-           <secondNode>[1 0 1 1 ]</secondNode>
-           <transitions>{T2:a }</transitions>
-       </link>
-       <link>
-           <firstNode>[0 1 1 1 ]</firstNode>
-           <secondNode>[0 1 1 4 ]</secondNode>
-           <transitions>{T3:b }</transitions>
-       </link>
-       <link>
-           <firstNode>[1 0 1 3W2+0 ]</firstNode>
-           <secondNode>[0 1 1 3W1+1 ]</secondNode>
-           <transitions>{T1:a T4:a }</transitions>
-       </link>
-       <link>
-           <firstNode>[1 0 1 3W2+0 ]</firstNode>
-           <secondNode>[1 0 1 3W2+0 ]</secondNode>
-           <transitions>{T3:b }</transitions>
-       </link>
-       <link>
-           <firstNode>[1 0 1 1 ]</firstNode>
-           <secondNode>[0 1 1 1 ]</secondNode>
+           <firstNode>[3 1 ]</firstNode>
+           <secondNode>[3 1W2+0 ]</secondNode>
            <transitions>{T1:a }</transitions>
        </link>
        <link>
-           <firstNode>[1 0 1 1 ]</firstNode>
-           <secondNode>[1 0 1 4 ]</secondNode>
-           <transitions>{T3:b }</transitions>
-       </link>
-       <link>
-           <firstNode>[0 1 1 3W2+0 ]</firstNode>
-           <secondNode>[1 0 1 3W1+1 ]</secondNode>
-           <transitions>{T2:a T4:a }</transitions>
-       </link>
-       <link>
-           <firstNode>[0 1 1 3W2+0 ]</firstNode>
-           <secondNode>[0 1 1 3W2+0 ]</secondNode>
-           <transitions>{T3:b }</transitions>
-       </link>
-       <link>
-           <firstNode>[0 1 1 4 ]</firstNode>
-           <secondNode>[1 0 1 2 ]</secondNode>
-           <transitions>{T2:a T4:a }</transitions>
-       </link>
-       <link>
-           <firstNode>[0 1 1 4 ]</firstNode>
-           <secondNode>[0 1 1 3W1+1 ]</secondNode>
-           <transitions>{T3:b }</transitions>
-       </link>
-       <link>
-           <firstNode>[0 1 1 3W1+1 ]</firstNode>
-           <secondNode>[1 0 1 3W0+2 ]</secondNode>
-           <transitions>{T2:a T4:a }</transitions>
-       </link>
-       <link>
-           <firstNode>[0 1 1 3W1+1 ]</firstNode>
-           <secondNode>[0 1 1 3W1+1 ]</secondNode>
-           <transitions>{T3:b }</transitions>
-       </link>
-       <link>
-           <firstNode>[1 0 1 4 ]</firstNode>
-           <secondNode>[0 1 1 2 ]</secondNode>
-           <transitions>{T1:a T4:a }</transitions>
-       </link>
-       <link>
-           <firstNode>[1 0 1 4 ]</firstNode>
-           <secondNode>[1 0 1 3W1+1 ]</secondNode>
-           <transitions>{T3:b }</transitions>
-       </link>
-       <link>
-           <firstNode>[1 0 1 3W1+1 ]</firstNode>
-           <secondNode>[0 1 1 3W0+2 ]</secondNode>
-           <transitions>{T1:a T4:a }</transitions>
-       </link>
-       <link>
-           <firstNode>[1 0 1 3W1+1 ]</firstNode>
-           <secondNode>[1 0 1 3W1+1 ]</secondNode>
-           <transitions>{T3:b }</transitions>
-       </link>
-       <link>
-           <firstNode>[1 0 1 2 ]</firstNode>
-           <secondNode>[0 1 1 0 ]</secondNode>
-           <transitions>{T1:a T4:a }</transitions>
-       </link>
-       <link>
-           <firstNode>[1 0 1 2 ]</firstNode>
-           <secondNode>[1 0 1 5 ]</secondNode>
-           <transitions>{T3:b }</transitions>
-       </link>
-       <link>
-           <firstNode>[1 0 1 3W0+2 ]</firstNode>
-           <secondNode>[0 1 1 3W2+0 ]</secondNode>
-           <transitions>{T1:a T4:a }</transitions>
-       </link>
-       <link>
-           <firstNode>[1 0 1 3W0+2 ]</firstNode>
-           <secondNode>[1 0 1 3W0+2 ]</secondNode>
-           <transitions>{T3:b }</transitions>
-       </link>
-       <link>
-           <firstNode>[0 1 1 2 ]</firstNode>
-           <secondNode>[1 0 1 0 ]</secondNode>
-           <transitions>{T2:a T4:a }</transitions>
-       </link>
-       <link>
-           <firstNode>[0 1 1 2 ]</firstNode>
-           <secondNode>[0 1 1 5 ]</secondNode>
-           <transitions>{T3:b }</transitions>
-       </link>
-       <link>
-           <firstNode>[0 1 1 3W0+2 ]</firstNode>
-           <secondNode>[1 0 1 3W2+0 ]</secondNode>
-           <transitions>{T2:a T4:a }</transitions>
-       </link>
-       <link>
-           <firstNode>[0 1 1 3W0+2 ]</firstNode>
-           <secondNode>[0 1 1 3W0+2 ]</secondNode>
-           <transitions>{T3:b }</transitions>
-       </link>
-       <link>
-           <firstNode>[1 0 1 5 ]</firstNode>
-           <secondNode>[0 1 1 3 ]</secondNode>
-           <transitions>{T1:a T4:a }</transitions>
-       </link>
-       <link>
-           <firstNode>[1 0 1 5 ]</firstNode>
-           <secondNode>[1 0 1 3W0+2 ]</secondNode>
-           <transitions>{T3:b }</transitions>
-       </link>
-       <link>
-           <firstNode>[0 1 1 5 ]</firstNode>
-           <secondNode>[1 0 1 3 ]</secondNode>
-           <transitions>{T2:a T4:a }</transitions>
-       </link>
-       <link>
-           <firstNode>[0 1 1 5 ]</firstNode>
-           <secondNode>[0 1 1 3W0+2 ]</secondNode>
-           <transitions>{T3:b }</transitions>
+           <firstNode>[3 1W2+0 ]</firstNode>
+           <secondNode>[3 1W2+0 ]</secondNode>
+           <transitions>{T1:a }</transitions>
        </link>
    </Links>
 </Tree>
