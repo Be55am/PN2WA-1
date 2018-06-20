@@ -31,8 +31,7 @@ public class MyReader {
     public Graph PrintTreeMGC()   {
 
         try {
-            InputStream inputStream=
-                    new FileInputStream("/media/bessam/Mes documents/Lees works/PN2WA-1/automate.xml");
+            InputStream inputStream= new FileInputStream("automate.xml");
 
             Reader reader = new InputStreamReader(inputStream,"UTF-8");
             InputSource is = new InputSource(reader);

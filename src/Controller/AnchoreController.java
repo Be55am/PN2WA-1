@@ -259,12 +259,17 @@ public class AnchoreController extends AbstractController {
 
     // todo make it happen
     @FXML
-    public void convert() throws UnboundedPlaceException, NoUnboundedPlaceException {
+    public void convert() throws UnboundedPlaceException, NoUnboundedPlaceException, DrowSomethingException, OverLoadException {
 
         //remove this to open files
-        if(!opened)
-        petriNet=new PetriNet(graph,"default");
+        if(!opened) {
+            if(graph.getPlaces().size()==0){
 
+                throw new  DrowSomethingException();
+
+            }else
+            petriNet = new PetriNet(graph, "default");
+        }
         opened=false;
         if(!petriNet.isDeterministic()){
             try {
@@ -400,9 +405,14 @@ public class AnchoreController extends AbstractController {
 
     }
     @FXML
-    public void generateCoverabilityGraph() throws UnboundedPlaceException, NotDeterministicException {
+    public void generateCoverabilityGraph() throws UnboundedPlaceException, NotDeterministicException, DrowSomethingException, OverLoadException {
         //remove this to open files
         if(!opened)
+            if(graph.getPlaces().size()==0){
+
+                throw new  DrowSomethingException();
+
+            }else
             petriNet=new PetriNet(graph,"default");
         opened=false;
         if(!petriNet.isDeterministic()){

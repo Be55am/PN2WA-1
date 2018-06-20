@@ -1,6 +1,7 @@
 package MCGGeneration;
 
 
+import Controller.OverLoadException;
 import model.Event;
 import model.PetriNet;
 
@@ -17,7 +18,7 @@ public class graphGen {
         this.graph = new MCG(name);
     }
 
-    public MCG generate(PetriNet net){
+    public MCG generate(PetriNet net) throws OverLoadException {
         //1
         Node q0=net.getInitialMarking();
         q0.setNewTag(true);
@@ -136,6 +137,11 @@ public class graphGen {
             }
             q.setNewTag(false);
             generatedNodes.clear();
+            if(graph.getNodes().size()>10000){
+                System.out.println("its not possible to detect the unbounded node ....");
+                throw new OverLoadException();
+
+            }
 
         }
 

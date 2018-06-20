@@ -106,4 +106,8 @@ public class MCG {
         return nodes.remove(n);
     }
 
+
+    public ArrayList<Node> getNodes() {
+        return nodes;
+    }
 }
