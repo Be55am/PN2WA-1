@@ -1,42 +1,32 @@
 package Controller;
 //package Controller;
-import AutomateDrower.Model.MyReader;
-import CoverabilityGraphViewer.AnimatedZoomOperator;
-import CoverabilityGraphViewer.MyNode;
-import CoverabilityGraphViewer.XMLReader;
-import MCGGeneration.*;
-import Views.PlaceView;
-import Views.Position;
-import Views.TransitionView;
-import WAConvertion.Converter;
-import WAConvertion.WeightedAutomata;
-import javafx.application.Platform;
+import Controller.CoverabilityGraphViewer.CoverabilityGraphController;
+import model.AutomateDrawer.MyReader;
+import Controller.CoverabilityGraphViewer.AnimatedZoomOperator;
+import Views.CoverabilityGraphViewer.MyNode;
+import Views.CoverabilityGraphViewer.XMLReader;
+import Views.PetriNet.Position;
+import model.PetriNet.*;
+import model.WAConverter.Converter;
+import model.WAConverter.WeightedAutomata;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.print.PrinterJob;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
-import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.util.Pair;
-import model.*;
-import model.Place;
-import model.Transition;
+import model.MCGGenerator.MCG;
+import model.MCGGenerator.graphGen;
 
 import javax.xml.transform.TransformerException;
 import java.io.*;
@@ -309,7 +299,7 @@ public class AnchoreController extends AbstractController {
 
             System.out.println(mcg.toString());
             Converter converter = new Converter(petriNet.getName());
-            MCGGeneration.Place unboundedPlace=petriNet.getInitialUnboundedMarking(mcg.getUnboundedPlaces());
+            model.MCGGenerator.Place unboundedPlace=petriNet.getInitialUnboundedMarking(mcg.getUnboundedPlaces());
             if(unboundedPlace==null){
                 throw new NoUnboundedPlaceException();
             }else {
@@ -535,10 +525,10 @@ public class AnchoreController extends AbstractController {
 
     }
 
-    public void drawAutomate(WeightedAutomata wa, MCGGeneration.Place unboundedP){
+    public void drawAutomate(WeightedAutomata wa, model.MCGGenerator.Place unboundedP){
         Stage stage=new Stage();
         MyReader reader=new MyReader();
-        AutomateDrower.Model.Graph graph=reader.PrintTreeMGC();
+        model.AutomateDrawer.Graph graph=reader.PrintTreeMGC();
 
 
         AnchorPane root=new AnchorPane();

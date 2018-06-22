@@ -5,13 +5,13 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.event.EventHandler;
 import javafx.event.Event;
 
-import model.*;
+import model.PetriNet.Graph;
+import model.PetriNet.Shape;
 
 public class Main extends Application {
     public static AnchorPane Anchorpane;
